@@ -8,5 +8,7 @@ GET     /                           controllers.HomeController.index()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
-
+POST    /newGame/:gameType          controllers.BoardController.newGame(gameType: String)
+PUT     /player1/insert/:x          controllers.BoardController.insert(x: Int, red)
+PUT     /player2/insert/:x          controllers.BoardController.insert(x: Int, yellow)
 
