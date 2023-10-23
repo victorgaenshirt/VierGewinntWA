@@ -1,0 +1,50 @@
+.bsp/
+
+# Mac
+.DS_Store
+
+# Eclipse
+bin/
+.settings/
+.classpath
+
+# Intellij
+.idea/
+target/
+
+# Gradle
+.gradle/
+build/
+pom.xml
+
+# sbt
+.cache
+.history
+.lib/
+dist/*
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+project/target/
+project/project/
+logs/
+project/.sbtserver
+.sbtserver/
+
+# Scala-IDE specific
+src\main\scala\de\htwg\se\battleship\model\TestSheet.sc
+src\main\scala\de\htwg\se\battleship\model\ModelWorksheet.sc
+.scala_dependencies
+*.worksheet
+.sc
+
+# Sonar
+.sonar/
+
+# Application
+VierGewinnt.log
+
+# Application backup
+playground.json
+playground.xml
