@@ -1,31 +1,45 @@
-@(playground:String)
+@import de.htwg.se.VierGewinnt.model.gridComponent.GridInterface
+@import de.htwg.se.VierGewinnt.model.gridComponent.gridBaseImpl.Chip
+@(grid: GridInterface, state: String, player: String)
 
 @main("Welcome to Play") {
-  <h1>Willkommen zu Vier Gewinnt!</h1>
-  <form method="POST" action="/newGame/0">
-    <input type="submit" value="Spiel starten">
-  </form>
-  <form method="POST" action="/insert/0">
-    <input type="submit" value="Chip einfügen in 1. Spalte">
-  </form>
-  <form method="POST" action="/insert/1">
-    <input type="submit" value="Chip einfügen in 2. Spalte">
-  </form>
-  <form method="POST" action="/insert/2">
-    <input type="submit" value="Chip einfügen in 3. Spalte">
-  </form>
-  <form method="POST" action="/insert/3">
-    <input type="submit" value="Chip einfügen in 4. Spalte">
-  </form>
-  <form method="POST" action="/insert/4">
-    <input type="submit" value="Chip einfügen in 5. Spalte">
-  </form>
-  <form method="POST" action="/insert/5">
-    <input type="submit" value="Chip einfügen in 6. Spalte">
-  </form>
-  <form method="POST" action="/insert/6">
-    <input type="submit" value="Chip einfügen in 7. Spalte">
-  </form>
+    <style>
+            .column-headers {
+                display: flex;
+                justify-content: flex-start;
+            }
 
-  <a1>@playground</a1>
+            .game-board span {
+                border: 1px solid #000; /* Zellenumrandung */
+                font-size: 30px;
+            }
+    </style>
+
+    <h1>Willkommen zu Vier Gewinnt!</h1>
+    <h2>@state // @player it's your turn!</h2>
+        <!-- Anzeige der Spaltenkopf-Buttons -->
+    <div class="column-headers">
+    @for(i <- 0 until grid.size) {
+        <form method="POST" action="/insert/@i">
+            <input type="submit" value="v">
+        </form>
+    }
+    </div>
+
+
+    <div class="game-board">
+    @for(row <- 0 until grid.size) {
+        <div class="row">
+        @for(col <- 0 until grid.size) {
+            <span>@{
+                if(grid.getCell(row, col).value == Chip.EMPTY) {
+                    "_"
+                } else if(grid.getCell(row, col).value == Chip.RED) {
+                    "O"
+                } else "X"
+            }</span>
+        }
+        </div>
+    }
+    </div>
 }

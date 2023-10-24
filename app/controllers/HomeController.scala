@@ -27,16 +27,16 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
    */
 
   def index() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.index(""))
+    Ok(views.html.index(controller.playground.grid, controller.printState, controller.playground.player.head.getName()))
   }
 
   def newGame(gameType: Int) = Action { implicit request: Request[AnyContent] =>
     controller.setupGame(gameType, 7)
-    Ok(views.html.index(controller.toString))
+    Ok(views.html.index(controller.playground.grid, controller.printState, controller.playground.player.head.getName()))
   }
 
   def insert(x: Int) = Action { implicit request: Request[AnyContent] =>
     controller.doAndPublish(controller.insChip, Move(x))
-    Ok(views.html.index(controller.toString))
+    Ok(views.html.index(controller.playground.grid, controller.printState, controller.playground.player.head.getName()))
   }
 }
