@@ -39,4 +39,12 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
     controller.doAndPublish(controller.insChip, Move(x))
     Ok(views.html.index(controller.playground.grid, controller.printState, controller.playground.player.head.getName()))
   }
+
+  def notFound() = Action { implicit request: Request[AnyContent] =>
+    NotFound(views.html.notFound())
+  }
+
+  def badRequest() = Action { implicit request: Request[AnyContent] =>
+    BadRequest(views.html.notFound())
+  }
 }

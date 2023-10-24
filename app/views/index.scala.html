@@ -6,13 +6,24 @@
     <style>
             .column-headers {
                 display: flex;
-                justify-content: flex-start;
+                justify-content: start;
+            }
+
+            .column-headers form {
+                width: 4em;
             }
 
             .game-board span {
-                border: 1px solid #000; /* Zellenumrandung */
+                display: inline-block;
                 font-size: 30px;
+                width: 2em;
             }
+
+            .action {
+                width: 2em;
+                height: 2em;
+            }
+
     </style>
     <h1>Willkommen zu Vier Gewinnt!</h1>
     <form method="POST" action="/newGame/0">
@@ -24,7 +35,7 @@
     <div class="column-headers">
     @for(i <- 0 until grid.size) {
         <form method="POST" action="/insert/@i">
-            <input type="submit" value="v">
+            <input class="action" type="submit" value="v">
         </form>
     }
     </div>
