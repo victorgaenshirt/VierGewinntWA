@@ -14,10 +14,13 @@
                 font-size: 30px;
             }
     </style>
-
     <h1>Willkommen zu Vier Gewinnt!</h1>
+    <form method="POST" action="/newGame/0">
+        <input type="submit" value="Spiel starten">
+    </form>
     <h2>@state // @player it's your turn!</h2>
-        <!-- Anzeige der Spaltenkopf-Buttons -->
+
+
     <div class="column-headers">
     @for(i <- 0 until grid.size) {
         <form method="POST" action="/insert/@i">
