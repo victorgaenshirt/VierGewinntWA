@@ -1,13 +1,12 @@
-@()
+@(playground:String)
 
 @main("Welcome to Play") {
   <h1>Willkommen zu Vier Gewinnt!</h1>
-  <form method="POST" action="/newGameMulti">
-    <label for="multi">zwei Spieler</label>
+  <form method="POST" action="/newGame/0">
     <input type="submit" value="Spiel starten">
   </form>
-  <form method="POST" action="/newGameSingle">
-    <label for="single">gegen den Computer</label>
-    <input type="submit" value="Spiel starten">
+  <form method="POST" action="/insert/0">
+    <input type="submit" value="Chip einfügen">
   </form>
+  <a1>@playground</a1>
 }
