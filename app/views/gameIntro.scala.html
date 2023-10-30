@@ -1,0 +1,77 @@
+@()
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Vier Gewinnt</title>
+    </head>
+    <body background="/assets/abstract-258339_1920.png">
+        <h1 style="border: 2px solid DodgerBlue; background-color:powderblue;">
+            <strong>Spielziel: Jeder Spieler versucht vier Steine seiner Farbe (Rot oder Gelb) in einer Reihe zu platzieren -
+                vertikal, horizontal oder diagonal!</strong>
+        </h1>
+
+        <h2><strong>Der Spielablauf:</strong></h2>
+        <p>
+            <em>
+                Das Brett besteht aus acht Reihen und acht Spalten. Es wird mit einem leeren Brett begonnen und durch jeden
+                Zug ein Feld belegt.
+            </em>
+        </p>
+        <img src="https://images.brettspielnetz.de/spelregels/4rij/leegbord.gif" alt="emptyboard" width="150" height="150">
+        <p>
+            <em>
+                Der gelbe Spieler fängt an und setzt einen Stein in der ersten Reihe, die Spalte kann er beliebig wählen
+                (von a bis h). Nach dem Setzen muss der Spieler seinen Zug bestätigen. Es wird immer auf
+                <br> leeres Feld gesetzt, unter dem sich kein anderes leeres Feld befindet. Nach dem ersten Zug von
+                Gelb könnte das Brett beispielsweise so aussehen:
+            </em>
+        </p>
+        <img src="https://images.brettspielnetz.de/spelregels/4rij/eensteen.gif" alt="stepone" width="150" height="150">
+        <br>
+        <h2>Die Taktik:</h2>
+        <p>
+            <em>Am besten werden gleichzeitig zwei Bedrohungen durch jeweils drei Steine in einer Reihe aufgebaut.
+                Sobald eine Reihe mit drei Steinen aufgebaut ist, muss der Gegenspieler reagieren, und anschließend
+                <br> wird die andere Reihe vervollständigt. Hier ist ein Beispiel:
+            </em>
+        </p>
+        <img src="https://images.brettspielnetz.de/spelregels/4rij/image008.gif" alt="steptwo" width="150" height="150">
+        <br>
+        <h1 style="border: 2px solid DodgerBlue; background-color:powderblue; text-align: center;">Die Strategie um zu gewinnen:</h1>
+        <ol type="1" style="text-align: center;">
+            <li>Kontrolle über das Zentrum gewinnen</li>
+            <li>Im Voraus planen</li>
+            <li>Den Gegner blockieren</li>
+            <li>Einen Nutzen aus gegnerischen Fehlern ziehen</li>
+            <li>Offensiv spielen</li>
+            <li>Stellen füllen überdenken</li>
+        </ol>
+        <h1 style="border: 2px solid DodgerBlue; background-color:powderblue; text-align: center;">Die Spielregeln in einem Video erklärt:</h1>
+        <div style="text-align: center;">
+            <a href="https://www.youtube.com/watch?v=BXHlc-_-aEA&ab_channel=KinderSpielenGerne" target="_blank" style="font-weight: bold; text-transform: uppercase;">
+                Video Vier Gewinnt!
+            </a>
+        </div>
+
+
+        <button class="scroll-to-top" onclick="scrollToTop()" style="width: 150px; height: 40px; font-size: 16px;">&uarr;</button>
+        <script>
+
+                function scrollToTop() {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+
+                window.onscroll = function() {
+                    const button = document.querySelector(".scroll-to-top");
+                    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                        button.style.display = "block";
+                    } else {
+                        button.style.display = "none";
+                    }
+                }
+        </script>
+
+    </body>
+</html>
