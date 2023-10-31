@@ -5,10 +5,11 @@
     <head>
         <meta charset="UTF-8">
         <title>Vier Gewinnt</title>
-        <link rel="icon" type="image/png" href="/assets/icons8-controller-24.png">
+        <link rel="icon" type="image/png" href="@routes.Assets.versioned("/assets/icons8-controller-24.png")">
     </head>
-    <body background="/assets/abstract-258339_1920.png">
-        <h1 style="border: 2px solid DodgerBlue; background-color:powderblue;">
+    <body background="@routes.Assets.versioned("/assets/abstract-258339_1920.png")">
+        <h1 style="border: 2px solid DodgerBlue;
+            background-color: powderblue;">
             <strong>Spielziel: Jeder Spieler versucht vier Steine seiner Farbe (Rot oder Gelb) in einer Reihe zu platzieren -
                 vertikal, horizontal oder diagonal!</strong>
         </h1>
@@ -40,7 +41,9 @@
         </p>
         <img src="https://images.brettspielnetz.de/spelregels/4rij/image008.gif" alt="steptwo" width="150" height="150">
         <br>
-        <h1 style="border: 2px solid DodgerBlue; background-color:powderblue; text-align: center;">Die Strategie um zu gewinnen:</h1>
+        <h1 style="border: 2px solid DodgerBlue;
+            background-color: powderblue;
+            text-align: center;">Die Strategie um zu gewinnen:</h1>
         <ol type="1" >
             <li>Kontrolle über das Zentrum gewinnen</li>
             <li>Im Voraus planen</li>
@@ -49,23 +52,28 @@
             <li>Offensiv spielen</li>
             <li>Stellen füllen überdenken</li>
         </ol>
-        <h1 style="border: 2px solid DodgerBlue; background-color:powderblue; text-align: center;">Die Spielregeln in einem Video erklärt:</h1>
+        <h1 style="border: 2px solid DodgerBlue;
+            background-color: powderblue;
+            text-align: center;">Die Spielregeln in einem Video erklärt:</h1>
         <div style="text-align: center;">
             <iframe width="560" height="315" src="https://www.youtube.com/embed/BXHlc-_-aEA" frameborder="2px solid red" allowfullscreen>
             </iframe>
             <br>
-            <a href="https://www.youtube.com/watch?v=BXHlc-_-aEA&ab_channel=KinderSpielenGerne" target="_blank" style="font-weight: bold; text-transform: uppercase;">
+            <a href="https://www.youtube.com/watch?v=BXHlc-_-aEA&ab_channel=KinderSpielenGerne" target="_blank" style="font-weight: bold;
+                text-transform: uppercase;">
                 Video auf YouTube schauen
             </a>
         </div>
-        <button class="scroll-to-top" onclick="scrollToTop()" style="width: 150px; height: 40px; font-size: 16px;">&uarr;</button>
+        <button class="scroll-to-top" onclick="scrollToTop()" style="width: 150px;
+            height: 40px;
+            font-size: 16px;">&uarr;</button>
         <script>
 
                 function scrollToTop() {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    window.scrollTo({top: 0, behavior: 'smooth'});
                 }
 
-                window.onscroll = function() {
+                window.onscroll = function () {
                     const button = document.querySelector(".scroll-to-top");
                     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
                         button.style.display = "block";
