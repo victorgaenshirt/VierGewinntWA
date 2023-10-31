@@ -58,22 +58,6 @@
                 Video auf YouTube schauen
             </a>
         </div>
-
-        <script>
-
-                function scrollToTop() {
-                    window.scrollTo({top: 0, behavior: 'smooth'});
-                }
-
-                window.onscroll = function () {
-                    const button = document.querySelector(".scroll-to-top");
-                    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                        button.style.display = "block";
-                    } else {
-                        button.style.display = "none";
-                    }
-                }
-        </script>
         <h1 style="border: 2px solid DodgerBlue;
             background-color: powderblue;
             text-align: center;">Fragen? Kontaktiere uns!</h1>
@@ -92,6 +76,69 @@
                 <a href="mailto:orkan.yuecetag@@htwg-konstanz.de?subject=[VierGewinnt] Frage:"> Mail</a></dd>
             <dd>&#10551; <a href="https://github.com/s0cy" target="_blank">GitHub</a></dd>
         </dl>
+
+        <h1 style="border: 2px solid DodgerBlue;
+            background-color: powderblue;
+            text-align: center;">Bewerte uns!</h1>
+
+        <div>
+            <p>Wie hat dir das Spiel gefallen? Bitte hinterlasse eine Bewertung:</p>
+
+            <div id="star-rating">
+                <span class="star" data-rating="1" onclick="setRating(1)">&#9733;</span>
+                <span class="star" data-rating="2" onclick="setRating(2)">&#9733;</span>
+                <span class="star" data-rating="3" onclick="setRating(3)">&#9733;</span>
+                <span class="star" data-rating="4" onclick="setRating(4)">&#9733;</span>
+                <span class="star" data-rating="5" onclick="setRating(5)">&#9733;</span>
+            </div>
+
+            <textarea id="userReview" rows="4" cols="50" placeholder="Deine Bewertung"></textarea>
+            <br>
+            <button onclick="submitReview()">Bewertung abschicken</button>
+        </div>
+
+        <div id="thankYouMessage" style="display: none;">
+            <p>Vielen Dank für deine Bewertung!</p>
+        </div>
+
+        <script>
+                let selectedRating = 0;
+
+                function setRating(rating) {
+                    selectedRating = rating;
+
+                    const stars = document.querySelectorAll(".star");
+                    stars.forEach((star) => {
+                        const starRating = parseInt(star.getAttribute("data-rating"));
+                        if (starRating <= selectedRating) {
+                            star.innerHTML = "&#9733;";
+                        } else {
+                            star.innerHTML = "&#9734;";
+                        }
+                    });
+                }
+
+                function submitReview() {
+                    const reviewText = document.getElementById("userReview").value;
+                    // TODO: handle review Text
+                    document.getElementById("userReview").style.display = "none";
+                    document.querySelector("button").style.display = "none";
+                    document.getElementById("thankYouMessage").style.display = "block";
+                }
+
+                function scrollToTop() {
+                    window.scrollTo({top: 0, behavior: 'smooth'});
+                }
+
+                window.onscroll = function () {
+                    const button = document.querySelector(".scroll-to-top");
+                    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                        button.style.display = "block";
+                    } else {
+                        button.style.display = "none";
+                    }
+                }
+        </script>
     </body>
 
     <button class="scroll-to-top" onclick="scrollToTop()" style="width: 150px;
