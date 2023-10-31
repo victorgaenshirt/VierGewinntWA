@@ -12,4 +12,5 @@ POST        /newGame/:gameType        controllers.HomeController.newGame(gameTyp
 POST        /insert/:x                controllers.HomeController.insert(x: Int)
 GET         /error/notfound           controllers.HomeController.notFound()
 GET         /error/badrequest         controllers.HomeController.badRequest()
+GET         /gameIntro                controllers.HomeController.gameIntro()
 

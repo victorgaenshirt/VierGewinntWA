@@ -47,4 +47,8 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
   def badRequest() = Action { implicit request: Request[AnyContent] =>
     BadRequest(views.html.notFound())
   }
+
+  def gameIntro() = Action { implicit request: Request[AnyContent] =>
+    Ok(views.html.gameIntro())
+  }
 }
