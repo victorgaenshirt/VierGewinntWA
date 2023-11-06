@@ -8,10 +8,8 @@
 
 body {
     background: var(--background);
-    align-items: center;
     margin: 2em;
     display: flex;
-    justify-content: center;
     flex-direction: column;
 }
 #title {
@@ -19,21 +17,29 @@ body {
     font-family: sans-serif;
     font-weight: bold;
     color: var(--blue);
+    justify-self: center;
+    align-self: center;
 }
 #subTitle {
-    font-size: 3em;
+    font-size: 2em;
     font-family: sans-serif;
     font-weight: bold;
     color: var(--blue);
+    border-radius: 0.5em;
+    border: 0.2em solid var(--red);
+    padding: 1em;
 }
 #text {
-    font-size: 1.5em;
+    font-size: 1.2em;
     font-family: sans-serif;
-    padding: 2em;
+    padding: 1em;
     color: var(--blue);
+    align-self: center;
+    justify-self: center;
 }
 #buttonContainer {
     padding: 0.5em 1em;
+    align-self: center;
 }
 #button {
     font-size: 1.5em;
@@ -42,8 +48,11 @@ body {
     border-radius: 0.5em;
     border: 0.2em solid var(--red);
     background-color: var(--yellow);
-    color: var(--black)
+    color: var(--black);
     cursor: pointer;
+}
+#grid {
+    align-self: center;
 }
 #gridChars {
     font-family: sans-serif;
@@ -54,10 +63,19 @@ body {
 #insertButtons {
     font-size: 1em;
     background-color: var(--red);
-    color: var(--blue);
+    color: var(--black);
 }
 #insertContainer {
     margin: 0.15em;
+}
+#row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+#column {
+    display: flex;
+    flex-direction: column;
 }
 
 

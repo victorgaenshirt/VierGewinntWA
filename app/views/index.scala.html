@@ -34,14 +34,14 @@
     </form>
 <h2 id="text">@state // @player it's your turn!</h2>
 
-<div class="column-headers">
+<div id="grid" class="column-headers">
     @for(i <- 0 until grid.size) {
     <form id="insertContainer" method="POST" action="/insert/@i">
         <input id="insertButtons" class="action" type="submit" value="V">
     </form>
     }
 </div>
-<div class="game-board">
+<div class="game-board" id="grid">
     @for(row <- 0 until grid.size) {
     <div class="row">
         @for(col <- 0 until grid.size) {
