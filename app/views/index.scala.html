@@ -25,29 +25,27 @@
     }
 </style>
 <body>
-<h1>Willkommen zu Vier Gewinnt!</h1>
-<form method="POST" action="/newGame/0">
-    <input type="submit" value="Spiel starten">
-</form>
-<form method="GET" action="/gameIntro">
-    <input type="submit" value="4 Gewinnt - Regeln">
-</form>
-<h2>@state // @player it's your turn!</h2>
+<h1 id="title">Willkommen zu Vier Gewinnt!</h1>
+    <form id="buttonContainer" method="POST" action="/newGame/0">
+        <input id="button" type="submit" value="Spiel starten">
+    </form>
+    <form id="buttonContainer" method="GET" action="/gameIntro">
+        <input id="button" type="submit" value="4 Gewinnt - Regeln">
+    </form>
+<h2 id="text">@state // @player it's your turn!</h2>
 
 <div class="column-headers">
     @for(i <- 0 until grid.size) {
-    <form method="POST" action="/insert/@i">
-        <input class="action" type="submit" value="v">
+    <form id="insertContainer" method="POST" action="/insert/@i">
+        <input id="insertButtons" class="action" type="submit" value="V">
     </form>
     }
 </div>
-
-
 <div class="game-board">
     @for(row <- 0 until grid.size) {
     <div class="row">
         @for(col <- 0 until grid.size) {
-        <span>@{
+        <span id="gridChars">@{
                     if(grid.getCell(row, col).value == Chip.EMPTY) {
                         "_"
                     } else if(grid.getCell(row, col).value == Chip.RED) {
