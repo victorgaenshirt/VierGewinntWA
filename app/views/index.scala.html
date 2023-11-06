@@ -2,60 +2,69 @@
 @import de.htwg.se.VierGewinnt.model.gridComponent.gridBaseImpl.Chip
 @(grid: GridInterface, state: String, player: String)
 
-@main("Vier Gewinnt") {
-<style>
-    .column-headers {
-        display: flex;
-        justify-content: start;
-    }
+@main("Welcome to Play") {
 
-    .column-headers form {
-        width: 4em;
-    }
+    <title>CSS Template</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
 
-    .game-board span {
-        display: inline-block;
-        font-size: 30px;
-        width: 2em;
-    }
+            .column-headers {
+                display: flex;
+                justify-content: start;
+            }
 
-    .action {
-        width: 2em;
-        height: 2em;
-    }
-</style>
-<body>
-<h1>Willkommen zu Vier Gewinnt!</h1>
-<form method="POST" action="/newGame/0">
-    <input type="submit" value="Spiel starten">
-</form>
-<form method="GET" action="/gameIntro">
-    <input type="submit" value="4 Gewinnt - Regeln">
-</form>
-<h2>@state // @player it's your turn!</h2>
+            .column-headers form {
+                width: 4em;
+            }
 
-<div class="column-headers">
-    @for(i <- 0 until grid.size) {
-    <form method="POST" action="/insert/@i">
-        <input class="action" type="submit" value="v">
+            .game-board span {
+                display: inline-block;
+                font-size: 30px;
+                width: 2em;
+            }
+
+            .action {
+                width: 2em;
+                height: 2em;
+            }
+
+    </style>
+
+    <h1>Willkommen zu Vier Gewinnt!</h1>
+    <form method="POST" action="/newGame/0">
+        <input type="submit" value="Spiel starten">
     </form>
+    <form method="GET" action="/gameIntro">
+        <input type="submit" value="4 Gewinnt - Regeln">
+    </form>
+    <h2>@state // @player it's your turn!</h2>
+
+    <div class="column-headers">
+    @for(i <- 0 until grid.size) {
+        <form method="POST" action="/insert/@i">
+            <input class="action" type="submit" value="v">
+        </form>
     }
-</div>
-
-
-<div class="game-board">
-    @for(row <- 0 until grid.size) {
-    <div class="row">
-        @for(col <- 0 until grid.size) {
-        <span>@{
-                    if(grid.getCell(row, col).value == Chip.EMPTY) {
-                        "_"
-                    } else if(grid.getCell(row, col).value == Chip.RED) {
-                        "O"
-                    } else "X"
-                }</span>
-        }
     </div>
+
+
+    <div class="game-board">
+    @for(row <- 0 until grid.size) {
+        <div class="row">
+        @for(col <- 0 until grid.size) {
+            <span>@{
+                if(grid.getCell(row, col).value == Chip.EMPTY) {
+                    "_"
+                } else if(grid.getCell(row, col).value == Chip.RED) {
+                    "O"
+                } else "X"
+            }</span>
+        }
+        </div>
     }
-</div>
+    </div>
 }
