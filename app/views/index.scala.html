@@ -27,12 +27,18 @@
             }
     </script>
     <body>
-        <h1 class="title">Willkommen zu Vier Gewinnt!</h1>
-        <h2 class="text">@state // @player it's your turn!</h2>
-        <button class="button" onclick="newGame(0)">Spiel starten</button>
-        <form method="GET" action="/gameIntro">
-            <input class="button" type="submit" value="4 Gewinnt - Regeln">
-        </form>
+        <h1 class="title">Willkommen zu <br> Vier Gewinnt!</h1>
+        @if(state.contains("won")) {
+            <h2 class="text win">@player you won!!</h2>
+        } else {
+            <h2 class="text">@state @player it's your turn!</h2>
+        }
+        <div class="buttons">
+            <button class="button" onclick="newGame(0)">Spiel starten</button>
+            <form method="GET" action="/gameIntro">
+                <input class="button" type="submit" value="4 Gewinnt - Regeln">
+            </form>
+        </div>
 
         <div id="grid">
         @for(col <- 0 until grid.size) {

@@ -1,60 +1,56 @@
 :root {
-    --black: #000000;
-    --yellow: #ffff9e;
+    --black: #000;
+    --yellow: #ff9e;
     --blue: #beeeff;
     --red: #ff7373;
     --background: #081d48;
     --navy: #191970;
     --white: #fff;
+    --green: #00f6a1
 }
 
 body {
     margin: 2em;
     display: flex;
     flex-direction: column;
-    background-size: 300%;
     background-color: var(--background);
     align-items: center;
 }
-.title {
-    font-size: 4em;
+
+.title, .subTitle, .text {
     font-family: sans-serif;
-    font-weight: bold;
-    color: var(--blue);
     text-align: center;
     align-self: center;
-    width: 60%;
+    font-size: 1em;
 }
+
+.title {
+    font-weight: bold;
+    color: var(--blue);
+    width: 100%;
+    font-size: 4em;
+}
+
 .subTitle {
-    font-size: 2em;
-    font-family: sans-serif;
     font-weight: bold;
     color: var(--blue);
     border-radius: 0.5em;
     border: 0.1em solid var(--red);
     padding: 0.5em;
-    text-align: center;
-    align-self: center;
     max-width: 60%;
 }
+
 .text {
-    font-size: 1.2em;
-    font-family: sans-serif;
     color: var(--blue);
-    text-align: center;
     margin: 0 auto;
     padding: 1em;
 }
-.hyperlink {
-    color: #0077FF;
-    text-decoration: none;
-    &:hover {
-     color: #00AACC;
-    }
+
+.win {
+    color: var(--green);
 }
 
 .button {
-    font-size: 1.5em;
     font-family: sans-serif;
     padding: 0.5em 1em;
     border-radius: 0.5em;
@@ -63,7 +59,9 @@ body {
     color: var(--black);
     cursor: pointer;
     margin: 1em;
+    font-size: 1.5em;
 }
+
 #grid {
     display: flex;
     align-items: center;
@@ -75,18 +73,18 @@ body {
 }
 
 .circle {
-    width: 50px;
-    height: 50px;
+    width: 4em;
+    height: 4em;
     border-radius: 50%;
     background-color: var(--yellow);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5em;
     color: var(--black);
     margin: 5px;
     cursor: pointer;
 }
+
 .chip-red {
     background-color: var(--red);
 }
@@ -98,19 +96,22 @@ body {
 .chip-empty {
     background-color: var(--white);
 }
+
 #insertButtons {
-    font-size: 1em;
     background-color: var(--red);
     color: var(--black);
 }
+
 #insertContainer {
     margin: 0.15em;
 }
+
 .blockStyle {
     align-items: center;
     display: flex;
     flex-direction: column;
 }
+
 .row {
     display: flex;
     flex-direction: row;
@@ -118,6 +119,13 @@ body {
     min-width: 100%;
     margin-bottom: 4em;
 }
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1em;
+}
+
 .slideButton {
     width: 10ex;
     height: 10ex;
@@ -130,6 +138,7 @@ body {
     color: var(--red);
     box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.3);
 }
+
 .slide {
     text-align: center;
     align-items: center;
@@ -137,6 +146,7 @@ body {
     width: 50%;
     height: 22em;
 }
+
 .email {
     background-image: url('../icons8-email-100.png');
     display: inline-block;
@@ -145,6 +155,7 @@ body {
     background-size: cover;
     margin-right: 5px;
 }
+
 .git {
     background-image: url('../icons8-git-96.png');
     display: inline-block;
@@ -153,6 +164,7 @@ body {
     background-size: cover;
     margin-right: 5px;
 }
+
 .contactCard {
     padding: 0.5em 1em;
     border-radius: 0.5em;
@@ -160,5 +172,21 @@ body {
     background-color: var(--navy);
     margin: 1em;
 }
+@media screen and (max-width: 767px) {
+    .title {
+        font-size: 3em;
+    }
+    .text {
+        font-size: 0.8em;
+    }
+    .button {
+        font-size: 1em;
+    }
+    .circle{
+        width: 3em;
+        height: 3em;
+    }
+}
+
 
 
