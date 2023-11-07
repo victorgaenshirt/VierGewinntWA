@@ -4,31 +4,31 @@
                 Jeder Spieler versucht vier Steine seiner Farbe in einer Reihe zu platzieren -
                 vertikal, horizontal oder diagonal!
         </h1>
-        <div id="row">
+        <div class="row">
             <button class="slideButton" onclick="changeSlide(-1)">Zurück</button>
             <div class="slide">
-                <img height="200ex" src="https://images.brettspielnetz.de/spelregels/4rij/leegbord.gif" alt="Image 1">
                 <p class="text">
                     Das Brett besteht aus acht Reihen und acht Spalten. Es wird mit einem leeren Brett begonnen und durch jeden
                     Zug ein Feld belegt.
                 </p>
+                <img height="200ex" src="https://images.brettspielnetz.de/spelregels/4rij/leegbord.gif" alt="Image 1">
             </div>
             <div class="slide">
-                <img height="200ex" src="https://images.brettspielnetz.de/spelregels/4rij/eensteen.gif" alt="Image 2">
                 <p class="text">
                     Der gelbe Spieler fängt an und setzt einen Stein in der ersten Reihe, die Spalte kann er beliebig wählen
                     (von a bis h). Nach dem Setzen muss der Spieler seinen Zug bestätigen. Es wird immer auf
                     leeres Feld gesetzt, unter dem sich kein anderes leeres Feld befindet. Nach dem ersten Zug von
                     Gelb könnte das Brett beispielsweise so aussehen:
                 </p>
+                <img height="200ex" src="https://images.brettspielnetz.de/spelregels/4rij/eensteen.gif" alt="Image 2">
             </div>
             <div class="slide">
-                <img height="200ex" src="https://images.brettspielnetz.de/spelregels/4rij/image008.gif" alt="Image 3">
                 <p class="text">
                     Am besten werden gleichzeitig zwei Bedrohungen durch jeweils drei Steine in einer Reihe aufgebaut.
                     Sobald eine Reihe mit drei Steinen aufgebaut ist, muss der Gegenspieler reagieren, und anschließend
                     wird die andere Reihe vervollständigt. Hier ist ein Beispiel:
                 </p>
+                <img height="200ex" src="https://images.brettspielnetz.de/spelregels/4rij/image008.gif" alt="Image 3">
             </div>
             <button class="slideButton" onclick="changeSlide(1)">Weiter</button>
         </div>
@@ -56,8 +56,8 @@
             }
         </script>
 
-        <div id="row">
-            <div id="blockStyle">
+        <div class="row">
+            <div class="blockStyle">
                 <h1 class="subTitle">
                     Die Strategie um zu gewinnen:
                 </h1>
@@ -70,7 +70,7 @@
                     <li class="text">Stellen füllen überdenken</li>
                 </ol>
             </div>
-            <div id="blockStyle">
+            <div class="blockStyle">
                 <h1 class="subTitle">
                     Die Spielregeln in einem Video erklärt:
                 </h1>
@@ -81,82 +81,43 @@
         <h1 class="subTitle">
             Kontakt
         </h1>
-        <dl>
-            <dt>Victor Gänshirt</dt>
-            <dd>&#9993;
-                <a href="mailto:victor.geaenshirt@@htwg-konstanz.de?subject=[VierGewinnt] Frage:"> Mail</a></dd>
-            <dd>&#10551; <a href="https://github.com/victorgaenshirt" target="_blank">GitHub</a></dd>
-            <dt>Selma Sahuric</dt>
-            <dd>&#9993;
-                <a href="mailto:selma.sahuric@@htwg-konstanz.de?subject=[VierGewinnt] Frage:"> Mail</a></dd>
-            <dd>&#10551; <a href="https://github.com/Orkan23" target="_blank">GitHub</a></dd>
-            <dt>Orkan Yücetag</dt>
-            <dd>&#9993;
-                <a href="mailto:orkan.yuecetag@@htwg-konstanz.de?subject=[VierGewinnt] Frage:"> Mail</a></dd>
-            <dd>&#10551; <a href="https://github.com/s0cy" target="_blank">GitHub</a></dd>
-        </dl>
-
-        <h1 class="subTitle">Bewerte uns!</h1>
-        <div>
-            <p class="text">Wie hat dir das Spiel gefallen? Bitte hinterlasse eine Bewertung:</p>
-            <div id="star-rating">
-                <span class="star" data-rating="1" onclick="setRating(1)">&#9733;</span>
-                <span class="star" data-rating="2" onclick="setRating(2)">&#9733;</span>
-                <span class="star" data-rating="3" onclick="setRating(3)">&#9733;</span>
-                <span class="star" data-rating="4" onclick="setRating(4)">&#9733;</span>
-                <span class="star" data-rating="5" onclick="setRating(5)">&#9733;</span>
+        <dl class="row">
+            <div>
+                <dt class="text">Victor Gänshirt</dt>
+                <dd class="email">
+                </dd>
+                <a class="hyperlink text" href="mailto:victor.geaenshirt@@htwg-konstanz.de?subject=[VierGewinnt] Frage:">Mail</a>
+                <dd class="git">
+                </dd>
+                <a class="hyperlink text" href="https://github.com/victorgaenshirt">GitHub</a>
             </div>
-            <textarea id="userReview" rows="4" cols="50" placeholder="Deine Bewertung"></textarea>
-            <button id="button" onclick="submitReview()">Bewertung abschicken</button>
-        </div>
-
-        <div id="thankYouMessage" style="display: none;">
-            <p class="text">Vielen Dank für deine Bewertung!</p>
-        </div>
-
-        <script>
-                let selectedRating = 0;
-
-                function setRating(rating) {
-                    selectedRating = rating;
-
-                    const stars = document.querySelectorAll(".star");
-                    stars.forEach((star) => {
-                        const starRating = parseInt(star.getAttribute("data-rating"));
-                        if (starRating <= selectedRating) {
-                            star.innerHTML = "&#9733;";
-                        } else {
-                            star.innerHTML = "&#9734;";
-                        }
-                    });
-                }
-
-                function submitReview() {
-                    const reviewText = document.getElementById("userReview").value;
-                    // TODO: handle review Text
-                    document.getElementById("userReview").style.display = "none";
-                    document.querySelector("button").style.display = "none";
-                    document.getElementById("thankYouMessage").style.display = "block";
-                }
-
-                function scrollToTop() {
-                    window.scrollTo({top: 0, behavior: 'smooth'});
-                }
-
-                window.onscroll = function () {
-                    const button = document.querySelector(".scroll-to-top");
-                    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                        button.style.display = "block";
-                    } else {
-                        button.style.display = "none";
-                    }
-                }
-        </script>
-
+            <div>
+                <dt class="text">Selma Sahuric</dt>
+                <dd class="email">
+                </dd>
+                    <a class="hyperlink text" href="mailto:selma.sahuric@@htwg-konstanz.de?subject=[VierGewinnt] Frage:"> Mail</a>
+                <dd class="git">
+                </dd>
+                    <a class="hyperlink text" href="https://github.com/s0cy" target="_blank">GitHub</a>
+            </div>
+            <div>
+                <dt class="text">Orkan Yücetag</dt>
+                <dd class="email">
+                </dd>
+                <a class="hyperlink text" href="mailto:orkan.yuecetag@@htwg-konstanz.de?subject=[VierGewinnt] Frage:"> Mail</a>
+                <dd class="git">
+                </dd>
+                <a class="hyperlink text" href="https://github.com/Orkan23 " target="_blank">GitHub</a>
+            </div>
+        </dl>
     </body>
-
-    <button class="scroll-to-top" onclick="scrollToTop()" style="width: 150px;
+    <button class="button" onclick="scrollToTop()" style="width: 150px;
         height: 40px;
         font-size: 16px;">&uarr;
     </button>
+    <script>
+        function scrollToTop() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+    </script>
 }

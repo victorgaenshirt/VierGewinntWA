@@ -3,57 +3,55 @@
 @(grid: GridInterface, state: String, player: String)
 
 @main("Vier Gewinnt") {
-<style>
-    .column-headers {
-        display: flex;
-        justify-content: start;
-    }
+    <script>
+            function playMove(column) {
+                fetch("/insert/" + column, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'Content-Type': 'application/json'
+                    },
+                    body: "",
+                }).then(() => location.reload());
+            }
 
-    .column-headers form {
-        width: 4em;
-    }
+            function newGame(type) {
+                fetch("/newGame/" + type, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'Content-Type': 'application/json'
+                    },
+                    body: "",
+                }).then(() => location.reload());
+            }
+    </script>
+    <body>
+        <h1 id="title">Willkommen zu Vier Gewinnt!</h1>
+        <h2 id="text">@state // @player it's your turn!</h2>
+        <button id="button" onclick="newGame(0)">Spiel starten</button>
+        <form method="GET" action="/gameIntro">
+            <input id="button" type="submit" value="4 Gewinnt - Regeln">
+        </form>
 
-    .game-board span {
-        display: inline-block;
-        font-size: 30px;
-        width: 2em;
-    }
-
-    .action {
-        width: 2em;
-        height: 2em;
-    }
-</style>
-<body>
-<h1 id="title">Willkommen zu Vier Gewinnt!</h1>
-    <form id="buttonContainer" method="POST" action="/newGame/0">
-        <input id="button" type="submit" value="Spiel starten">
-    </form>
-    <form id="buttonContainer" method="GET" action="/gameIntro">
-        <input id="button" type="submit" value="4 Gewinnt - Regeln">
-    </form>
-<h2 class="text">@state // @player it's your turn!</h2>
-
-<div id="grid" class="column-headers">
-    @for(i <- 0 until grid.size) {
-    <form id="insertContainer" method="POST" action="/insert/@i">
-        <input id="insertButtons" class="action" type="submit" value="V">
-    </form>
-    }
-</div>
-<div class="game-board" id="grid">
-    @for(row <- 0 until grid.size) {
-    <div class="row">
+        <div id="grid">
         @for(col <- 0 until grid.size) {
-        <span id="gridChars">@{
-                    if(grid.getCell(row, col).value == Chip.EMPTY) {
-                        "_"
-                    } else if(grid.getCell(row, col).value == Chip.RED) {
-                        "O"
-                    } else "X"
-                }</span>
+            <div class="column">
+            @for(row <- grid.size - 1 to 0 by -1) {
+                @grid.getCell(row, col).value match {
+                    case Chip.RED => {
+                        <div class="circle chip-red" onclick="playMove(@col)"></div>
+                    }
+                    case Chip.YELLOW => {
+                        <div class="circle chip-yellow" onclick="playMove(@col)"></div>
+                    }
+                    case _ => {
+                        <div class="circle chip-empty" onclick="playMove(@col)"></div>
+                    }
+                }
+            }
+            </div>
         }
-    </div>
-    }
-</div>
+        </div>
+    </body>
 }

@@ -1,17 +1,20 @@
 :root {
     --black: #000000;
     --yellow: #ffff9e;
-    --blue: #2b2c7c;
+    --blue: #beeeff;
     --red: #ff7373;
+    --background: #081d48;
+    --navy: #191970;
+    --white: #fff;
 }
 
 body {
     margin: 2em;
     display: flex;
     flex-direction: column;
-    background-image: url('../pastelBackground.jpg');
-    background-repeat: repeat;
     background-size: 300%;
+    background-color: var(--background);
+    align-items: center;
 }
 .title {
     font-size: 4em;
@@ -28,8 +31,8 @@ body {
     font-weight: bold;
     color: var(--blue);
     border-radius: 0.5em;
-    border: 0.2em solid var(--red);
-    padding: 1em;
+    border: 0.1em solid var(--red);
+    padding: 0.5em;
     text-align: center;
     align-self: center;
     max-width: 60%;
@@ -42,28 +45,58 @@ body {
     margin: 0 auto;
     padding: 1em;
 }
-#buttonContainer {
-    padding: 0.5em 1em;
-    align-self: center;
+.hyperlink {
+    color: #0077FF;
+    text-decoration: none;
+    &:hover {
+     color: #00AACC;
+    }
 }
-#button {
+
+.button {
     font-size: 1.5em;
     font-family: sans-serif;
     padding: 0.5em 1em;
     border-radius: 0.5em;
-    border: 0.2em solid var(--red);
+    border: 0.15em solid var(--red);
     background-color: var(--yellow);
     color: var(--black);
     cursor: pointer;
+    margin: 1em;
 }
 #grid {
-    align-self: center;
+    display: flex;
+    align-items: center;
 }
-#gridChars {
-    font-family: sans-serif;
-    font-size: 2em;
-    padding-top: 0.5em;
-    color: var(--blue);
+
+.column {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--yellow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    color: var(--black);
+    margin: 5px;
+    cursor: pointer;
+}
+.chip-red {
+    background-color: var(--red);
+}
+
+.chip-yellow {
+    background-color: var(--yellow);
+}
+
+.chip-empty {
+    background-color: var(--white);
 }
 #insertButtons {
     font-size: 1em;
@@ -73,34 +106,29 @@ body {
 #insertContainer {
     margin: 0.15em;
 }
-#row {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    margin: 2em;
-}
-#column {
-    display: flex;
-    flex-direction: column;
-}
-#blockStyle {
+.blockStyle {
     align-items: center;
     display: flex;
     flex-direction: column;
 }
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    min-width: 100%;
+    margin-bottom: 4em;
+}
 .slideButton {
     width: 10ex;
     height: 10ex;
-    border-radius: 5ex;
+    border-radius: 2ex;
     border: 0.2em;
     align-self: center;
     background-color: var(--yellow);
     font-family: sans-serif;
+    font-size: 1.2em;
     color: var(--red);
     box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.3);
-}
-#rightSlideButton {
-    width: 10%;
 }
 .slide {
     text-align: center;
@@ -109,11 +137,30 @@ body {
     width: 50%;
     height: 22em;
 }
-
-#userReview {
-
-
-
-    }
+.email {
+    background-image: url('../icons8-email-100.png');
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+    margin-right: 5px;
+}
+.git {
+    background-image: url('../icons8-git-96.png');
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-size: cover;
+    margin-right: 5px;
+}
+.contactCard {
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+    border: 0.15em solid var(--white);
+    background-color: var(--navy);
+    color: var(--black);
+    cursor: pointer;
+    margin: 1em;
+}
 
 
