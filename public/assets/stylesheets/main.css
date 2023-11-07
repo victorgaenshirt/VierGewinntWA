@@ -158,8 +158,6 @@ body {
     border-radius: 0.5em;
     border: 0.15em solid var(--white);
     background-color: var(--navy);
-    color: var(--black);
-    cursor: pointer;
     margin: 1em;
 }
 
