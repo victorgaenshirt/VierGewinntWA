@@ -1,26 +1,28 @@
 :root {
     --black: #000000;
     --yellow: #ffff9e;
-    --blue: #beeeff;
+    --blue: #2b2c7c;
     --red: #ff7373;
-    --background: #3B599C;
 }
 
 body {
-    background: var(--background);
     margin: 2em;
     display: flex;
     flex-direction: column;
+    background-image: url('../pastelBackground.jpg');
+    background-repeat: repeat;
+    background-size: 300%;
 }
-#title {
+.title {
     font-size: 4em;
     font-family: sans-serif;
     font-weight: bold;
     color: var(--blue);
-    justify-self: center;
+    text-align: center;
     align-self: center;
+    width: 60%;
 }
-#subTitle {
+.subTitle {
     font-size: 2em;
     font-family: sans-serif;
     font-weight: bold;
@@ -28,14 +30,17 @@ body {
     border-radius: 0.5em;
     border: 0.2em solid var(--red);
     padding: 1em;
+    text-align: center;
+    align-self: center;
+    max-width: 60%;
 }
-#text {
+.text {
     font-size: 1.2em;
     font-family: sans-serif;
-    padding: 1em;
     color: var(--blue);
-    align-self: center;
-    justify-self: center;
+    text-align: center;
+    margin: 0 auto;
+    padding: 1em;
 }
 #buttonContainer {
     padding: 0.5em 1em;
@@ -72,10 +77,43 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    margin: 2em;
 }
 #column {
     display: flex;
     flex-direction: column;
 }
+#blockStyle {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.slideButton {
+    width: 10ex;
+    height: 10ex;
+    border-radius: 5ex;
+    border: 0.2em;
+    align-self: center;
+    background-color: var(--yellow);
+    font-family: sans-serif;
+    color: var(--red);
+    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.3);
+}
+#rightSlideButton {
+    width: 10%;
+}
+.slide {
+    text-align: center;
+    align-items: center;
+    justify-items: center;
+    width: 50%;
+    height: 22em;
+}
+
+#userReview {
+
+
+
+    }
 
 

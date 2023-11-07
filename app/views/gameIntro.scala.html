@@ -1,57 +1,86 @@
 @main("Vier Gewinnt - About") {
     <body>
-        <h1 id="subTitle">
-                Spielziel: Jeder Spieler versucht vier Steine seiner Farbe (Rot oder Gelb) in einer Reihe zu platzieren -
+        <h1 class="subTitle">
+                Jeder Spieler versucht vier Steine seiner Farbe in einer Reihe zu platzieren -
                 vertikal, horizontal oder diagonal!
         </h1>
-        <h2 id="text">
-            Der Spielablauf:
-        </h2>
-        <p id="text">
-            Das Brett besteht aus acht Reihen und acht Spalten. Es wird mit einem leeren Brett begonnen und durch jeden
-            Zug ein Feld belegt.
-        </p>
-        <img src="https://images.brettspielnetz.de/spelregels/4rij/leegbord.gif" alt="emptyboard" width="150" height="150">
-        <p id="text">
-            Der gelbe Spieler fängt an und setzt einen Stein in der ersten Reihe, die Spalte kann er beliebig wählen
-            (von a bis h). Nach dem Setzen muss der Spieler seinen Zug bestätigen. Es wird immer auf
-            leeres Feld gesetzt, unter dem sich kein anderes leeres Feld befindet. Nach dem ersten Zug von
-            Gelb könnte das Brett beispielsweise so aussehen:
-        </p>
-        <img src="https://images.brettspielnetz.de/spelregels/4rij/eensteen.gif" alt="stepone" width="150" height="150">
-        <br>
-        <p id="text">
-            Am besten werden gleichzeitig zwei Bedrohungen durch jeweils drei Steine in einer Reihe aufgebaut.
-            Sobald eine Reihe mit drei Steinen aufgebaut ist, muss der Gegenspieler reagieren, und anschließend
-            wird die andere Reihe vervollständigt. Hier ist ein Beispiel:
-        </p>
-        <img src="https://images.brettspielnetz.de/spelregels/4rij/image008.gif" alt="steptwo" width="150" height="150">
-        <br>
         <div id="row">
-            <div>
-                <h1 id="subTitle">
+            <button class="slideButton" onclick="changeSlide(-1)">Zurück</button>
+            <div class="slide">
+                <img height="200ex" src="https://images.brettspielnetz.de/spelregels/4rij/leegbord.gif" alt="Image 1">
+                <p class="text">
+                    Das Brett besteht aus acht Reihen und acht Spalten. Es wird mit einem leeren Brett begonnen und durch jeden
+                    Zug ein Feld belegt.
+                </p>
+            </div>
+            <div class="slide">
+                <img height="200ex" src="https://images.brettspielnetz.de/spelregels/4rij/eensteen.gif" alt="Image 2">
+                <p class="text">
+                    Der gelbe Spieler fängt an und setzt einen Stein in der ersten Reihe, die Spalte kann er beliebig wählen
+                    (von a bis h). Nach dem Setzen muss der Spieler seinen Zug bestätigen. Es wird immer auf
+                    leeres Feld gesetzt, unter dem sich kein anderes leeres Feld befindet. Nach dem ersten Zug von
+                    Gelb könnte das Brett beispielsweise so aussehen:
+                </p>
+            </div>
+            <div class="slide">
+                <img height="200ex" src="https://images.brettspielnetz.de/spelregels/4rij/image008.gif" alt="Image 3">
+                <p class="text">
+                    Am besten werden gleichzeitig zwei Bedrohungen durch jeweils drei Steine in einer Reihe aufgebaut.
+                    Sobald eine Reihe mit drei Steinen aufgebaut ist, muss der Gegenspieler reagieren, und anschließend
+                    wird die andere Reihe vervollständigt. Hier ist ein Beispiel:
+                </p>
+            </div>
+            <button class="slideButton" onclick="changeSlide(1)">Weiter</button>
+        </div>
+
+        <script>
+            let slideIndex = 1;
+            showSlide(slideIndex);
+
+            function changeSlide(n) {
+                showSlide(slideIndex += n);
+            }
+
+            function showSlide(n) {
+                const slides = document.getElementsByClassName("slide");
+                if (n > slides.length) {
+                    slideIndex = 1;
+                }
+                if (n < 1) {
+                    slideIndex = slides.length;
+                }
+                for (let i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";
+                }
+                slides[slideIndex - 1].style.display = "block";
+            }
+        </script>
+
+        <div id="row">
+            <div id="blockStyle">
+                <h1 class="subTitle">
                     Die Strategie um zu gewinnen:
                 </h1>
                 <ol type="1">
-                    <li id="text">Kontrolle über das Zentrum gewinnen</li>
-                    <li id="text">Im Voraus planen</li>
-                    <li id="text">Den Gegner blockieren</li>
-                    <li id="text">Einen Nutzen aus gegnerischen Fehlern ziehen</li>
-                    <li id="text">Offensiv spielen</li>
-                    <li id="text">Stellen füllen überdenken</li>
+                    <li class="text">Kontrolle über das Zentrum gewinnen</li>
+                    <li class="text">Im Voraus planen</li>
+                    <li class="text">Den Gegner blockieren</li>
+                    <li class="text">Einen Nutzen aus gegnerischen Fehlern ziehen</li>
+                    <li class="text">Offensiv spielen</li>
+                    <li class="text">Stellen füllen überdenken</li>
                 </ol>
             </div>
-            <div>
-                <h1 id="subTitle">
+            <div id="blockStyle">
+                <h1 class="subTitle">
                     Die Spielregeln in einem Video erklärt:
                 </h1>
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/BXHlc-_-aEA" />
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/BXHlc-_-aEA" >
+                </iframe>
             </div>
         </div>
-        <h1 id="subTitle">
-            Fragen? Kontaktiere uns!
+        <h1 class="subTitle">
+            Kontakt
         </h1>
-
         <dl>
             <dt>Victor Gänshirt</dt>
             <dd>&#9993;
@@ -67,9 +96,9 @@
             <dd>&#10551; <a href="https://github.com/s0cy" target="_blank">GitHub</a></dd>
         </dl>
 
-        <h1 id="text">Bewerte uns!</h1>
+        <h1 class="subTitle">Bewerte uns!</h1>
         <div>
-            <p id="text">Wie hat dir das Spiel gefallen? Bitte hinterlasse eine Bewertung:</p>
+            <p class="text">Wie hat dir das Spiel gefallen? Bitte hinterlasse eine Bewertung:</p>
             <div id="star-rating">
                 <span class="star" data-rating="1" onclick="setRating(1)">&#9733;</span>
                 <span class="star" data-rating="2" onclick="setRating(2)">&#9733;</span>
@@ -77,14 +106,12 @@
                 <span class="star" data-rating="4" onclick="setRating(4)">&#9733;</span>
                 <span class="star" data-rating="5" onclick="setRating(5)">&#9733;</span>
             </div>
-
             <textarea id="userReview" rows="4" cols="50" placeholder="Deine Bewertung"></textarea>
-            <br>
-            <button onclick="submitReview()">Bewertung abschicken</button>
+            <button id="button" onclick="submitReview()">Bewertung abschicken</button>
         </div>
 
         <div id="thankYouMessage" style="display: none;">
-            <p id="text">Vielen Dank für deine Bewertung!</p>
+            <p class="text">Vielen Dank für deine Bewertung!</p>
         </div>
 
         <script>
@@ -125,6 +152,7 @@
                     }
                 }
         </script>
+
     </body>
 
     <button class="scroll-to-top" onclick="scrollToTop()" style="width: 150px;
