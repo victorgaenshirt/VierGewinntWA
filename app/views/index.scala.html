@@ -3,59 +3,61 @@
 @(grid: GridInterface, state: String, player: String)
 
 @main("Vier Gewinnt") {
-<style>
-    .column-headers {
-        display: flex;
-        justify-content: start;
-    }
+    <script>
+            function playMove(column) {
+                fetch("/insert/" + column, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'Content-Type': 'application/json'
+                    },
+                    body: "",
+                }).then(() => location.reload());
+            }
 
-    .column-headers form {
-        width: 4em;
-    }
-
-    .game-board span {
-        display: inline-block;
-        font-size: 30px;
-        width: 2em;
-    }
-
-    .action {
-        width: 2em;
-        height: 2em;
-    }
-</style>
-<body>
-<h1>Willkommen zu Vier Gewinnt!</h1>
-<form method="POST" action="/newGame/0">
-    <input type="submit" value="Spiel starten">
-</form>
-<form method="GET" action="/gameIntro">
-    <input type="submit" value="4 Gewinnt - Regeln">
-</form>
-<h2>@state // @player it's your turn!</h2>
-
-<div class="column-headers">
-    @for(i <- 0 until grid.size) {
-    <form method="POST" action="/insert/@i">
-        <input class="action" type="submit" value="v">
-    </form>
-    }
-</div>
-
-
-<div class="game-board">
-    @for(row <- 0 until grid.size) {
-    <div class="row">
-        @for(col <- 0 until grid.size) {
-        <span>@{
-                    if(grid.getCell(row, col).value == Chip.EMPTY) {
-                        "_"
-                    } else if(grid.getCell(row, col).value == Chip.RED) {
-                        "O"
-                    } else "X"
-                }</span>
+            function newGame(type) {
+                fetch("/newGame/" + type, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'Content-Type': 'application/json'
+                    },
+                    body: "",
+                }).then(() => location.reload());
+            }
+    </script>
+    <body>
+        <h1 class="title">Willkommen zu <br> Vier Gewinnt!</h1>
+        @if(state.contains("won")) {
+            <h2 class="text win">@player you won!!</h2>
+        } else {
+            <h2 class="text">@state @player it's your turn!</h2>
         }
-    </div>
-    }
-</div>
+        <div class="buttons">
+            <button class="button" onclick="newGame(0)">Spiel starten</button>
+            <form method="GET" action="/gameIntro">
+                <input class="button" type="submit" value="4 Gewinnt - Regeln">
+            </form>
+        </div>
+
+        <div id="grid">
+        @for(col <- 0 until grid.size) {
+            <div class="column">
+            @for(row <- grid.size - 1 to 0 by -1) {
+                @grid.getCell(row, col).value match {
+                    case Chip.RED => {
+                        <div class="circle chip-red" onclick="playMove(@col)"></div>
+                    }
+                    case Chip.YELLOW => {
+                        <div class="circle chip-yellow" onclick="playMove(@col)"></div>
+                    }
+                    case _ => {
+                        <div class="circle chip-empty" onclick="playMove(@col)"></div>
+                    }
+                }
+            }
+            </div>
+        }
+        </div>
+    </body>
 }

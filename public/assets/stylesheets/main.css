@@ -1,0 +1,192 @@
+:root {
+    --black: #000;
+    --yellow: #ff9e;
+    --blue: #beeeff;
+    --red: #ff7373;
+    --background: #081d48;
+    --navy: #191970;
+    --white: #fff;
+    --green: #00f6a1
+}
+
+body {
+    margin: 2em;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background);
+    align-items: center;
+}
+
+.title, .subTitle, .text {
+    font-family: sans-serif;
+    text-align: center;
+    align-self: center;
+    font-size: 1em;
+}
+
+.title {
+    font-weight: bold;
+    color: var(--blue);
+    width: 100%;
+    font-size: 4em;
+}
+
+.subTitle {
+    font-weight: bold;
+    color: var(--blue);
+    border-radius: 0.5em;
+    border: 0.1em solid var(--red);
+    padding: 0.5em;
+    max-width: 60%;
+}
+
+.text {
+    color: var(--blue);
+    margin: 0 auto;
+    padding: 1em;
+}
+
+.win {
+    color: var(--green);
+}
+
+.button {
+    font-family: sans-serif;
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+    border: 0.15em solid var(--red);
+    background-color: var(--yellow);
+    color: var(--black);
+    cursor: pointer;
+    margin: 1em;
+    font-size: 1.5em;
+}
+
+#grid {
+    display: flex;
+    align-items: center;
+}
+
+.column {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.circle {
+    width: 4em;
+    height: 4em;
+    border-radius: 50%;
+    background-color: var(--yellow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--black);
+    margin: 5px;
+    cursor: pointer;
+}
+
+.chip-red {
+    background-color: var(--red);
+}
+
+.chip-yellow {
+    background-color: var(--yellow);
+}
+
+.chip-empty {
+    background-color: var(--white);
+}
+
+#insertButtons {
+    background-color: var(--red);
+    color: var(--black);
+}
+
+#insertContainer {
+    margin: 0.15em;
+}
+
+.blockStyle {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    min-width: 100%;
+    margin-bottom: 4em;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1em;
+}
+
+.slideButton {
+    width: 10ex;
+    height: 10ex;
+    border-radius: 2ex;
+    border: 0.2em;
+    align-self: center;
+    background-color: var(--yellow);
+    font-family: sans-serif;
+    font-size: 1.2em;
+    color: var(--red);
+    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
+.slide {
+    text-align: center;
+    align-items: center;
+    justify-items: center;
+    width: 50%;
+    height: 22em;
+}
+
+.email {
+    background-image: url('../icons8-email-100.png');
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+    margin-right: 5px;
+}
+
+.git {
+    background-image: url('../icons8-git-96.png');
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-size: cover;
+    margin-right: 5px;
+}
+
+.contactCard {
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+    border: 0.15em solid var(--white);
+    background-color: var(--navy);
+    margin: 1em;
+}
+@media screen and (max-width: 767px) {
+    .title {
+        font-size: 3em;
+    }
+    .text {
+        font-size: 0.8em;
+    }
+    .button {
+        font-size: 1em;
+    }
+    .circle{
+        width: 3em;
+        height: 3em;
+    }
+}
+
+
+
