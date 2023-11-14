@@ -4,6 +4,7 @@
 
 @main("Vier Gewinnt") {
     <script>
+
             function playMove(column) {
                 fetch("/insert/" + column, {
                     method: 'POST',
@@ -26,38 +27,40 @@
                 }).then(() => location.reload());
             }
     </script>
-    <body>
-        <h1 class="title">Willkommen zu <br> Vier Gewinnt!</h1>
+
+    <div class="container mt-5 text-center">
+        <h1 class="text-center text-info">Willkommen zu <br> Vier Gewinnt!</h1>
+
         @if(state.contains("won")) {
-            <h2 class="text win">@player you won!!</h2>
+            <h2 class="text-center text-success">@player you won!!</h2>
         } else {
-            <h2 class="text">@state @player it's your turn!</h2>
+            <h2 class="text-center">@state @player it's your turn!</h2>
         }
-        <div class="buttons">
-            <button class="button" onclick="newGame(0)">Spiel starten</button>
-            <form method="GET" action="/gameIntro">
-                <input class="button" type="submit" value="4 Gewinnt - Regeln">
-            </form>
+
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-6 text-center">
+                <button class="btn btn-primary btn-lg" onclick="newGame(0)">Spiel starten</button>
+            </div>
         </div>
 
-        <div id="grid">
-        @for(col <- 0 until grid.size) {
-            <div class="column">
-            @for(row <- grid.size - 1 to 0 by -1) {
+        <div class="mt-5">
+        @for(row <- 0 until grid.size) {
+            <div class="row">
+            @for(col <- 0 until grid.size) {
                 @grid.getCell(row, col).value match {
                     case Chip.RED => {
-                        <div class="circle chip-red" onclick="playMove(@col)"></div>
+                        <span class="col bi bi-circle-fill text-danger mb-6" style="font-size: 4em;" onclick="playMove(@col)"></span>
                     }
                     case Chip.YELLOW => {
-                        <div class="circle chip-yellow" onclick="playMove(@col)"></div>
+                        <span class="col bi bi-circle-fill text-warning mb-6" style="font-size: 4em;" onclick="playMove(@col)"></span>
                     }
                     case _ => {
-                        <div class="circle chip-empty" onclick="playMove(@col)"></div>
+                        <span class="col bi bi-circle-fill text-light mb-6" style="font-size: 4em;" onclick="playMove(@col)"></span>
                     }
                 }
             }
             </div>
         }
         </div>
-    </body>
+    </div>
 }
