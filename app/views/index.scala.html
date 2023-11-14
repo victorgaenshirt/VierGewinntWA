@@ -4,7 +4,6 @@
 
 @main("Vier Gewinnt") {
     <script>
-
             function playMove(column) {
                 fetch("/insert/" + column, {
                     method: 'POST',
@@ -43,7 +42,6 @@
             </div>
         </div>
 
-
         <div class="mt-5">
         @for(row <- 0 until grid.size) {
             <div class="row">
@@ -56,7 +54,7 @@
                         <span id="@row.@col" class="col bi bi-circle-fill text-warning mb-6" style="font-size: 4em;" onclick="playMove(@col)"></span>
                     }
                     case _ => {
-                        <span id="@row.@col" class="col bi bi-circle-fill text-light mb-6" style="font-size: 4em;" onclick="playMove(@col)"></span>
+                        <span id="@row.@col" class="col bi bi-circle-fill text mb-6" style="font-size: 4em;" onclick="playMove(@col)"></span>
                     }
                 }
             }
