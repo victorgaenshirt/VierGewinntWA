@@ -28,7 +28,7 @@
             }
     </script>
 
-    <div class="container mt-5 text-center">
+    <div class="container mt-5 text-center p-3">
         <h1 class="text-center text-info">Willkommen zu <br> Vier Gewinnt!</h1>
 
         @if(state.contains("won")) {
@@ -43,24 +43,72 @@
             </div>
         </div>
 
+
         <div class="mt-5">
         @for(row <- 0 until grid.size) {
             <div class="row">
             @for(col <- 0 until grid.size) {
                 @grid.getCell(row, col).value match {
                     case Chip.RED => {
-                        <span class="col bi bi-circle-fill text-danger mb-6" style="font-size: 4em;" onclick="playMove(@col)"></span>
+                        <span id="@row.@col" class="col bi bi-circle-fill text-danger mb-6" style="font-size: 4em;" onclick="playMove(@col)"></span>
                     }
                     case Chip.YELLOW => {
-                        <span class="col bi bi-circle-fill text-warning mb-6" style="font-size: 4em;" onclick="playMove(@col)"></span>
+                        <span id="@row.@col" class="col bi bi-circle-fill text-warning mb-6" style="font-size: 4em;" onclick="playMove(@col)"></span>
                     }
                     case _ => {
-                        <span class="col bi bi-circle-fill text-light mb-6" style="font-size: 4em;" onclick="playMove(@col)"></span>
+                        <span id="@row.@col" class="col bi bi-circle-fill text-light mb-6" style="font-size: 4em;" onclick="playMove(@col)"></span>
                     }
                 }
             }
             </div>
         }
         </div>
+
+        @if(state.contains("won")) {
+            @grid.checkWin() match {
+                case Some(v) => {
+                    @{
+                        val chip1 = v._2
+                        val chip2 = v._3
+                        val chip3 = v._4
+                        val chip4 = v._5
+                    }
+                    <script>
+                        const blinkInterval = setInterval(() => {
+                            const elements = [
+                                "@v._2._1.@v._2._2",
+                                "@v._3._1.@v._3._2",
+                                "@v._4._1.@v._4._2",
+                                "@v._5._1.@v._5._2"
+                            ];
+
+                            elements.forEach(elementId => {
+                                const element = document.getElementById(elementId);
+                                if (@v._1.equals(2)) {
+                                    if (element.classList.contains("text-warning")) {
+                                        element.classList.remove("text-warning");
+                                        element.classList.add("text-success");
+                                    } else if (element.classList.contains("text-success")) {
+                                        element.classList.remove("text-success");
+                                        element.classList.add("text-warning");
+                                    }
+                                } else if (@v._1.equals(1)) {
+                                    if (element.classList.contains("text-danger")) {
+                                        element.classList.remove("text-danger");
+                                        element.classList.add("text-success");
+                                    } else if (element.classList.contains("text-success")) {
+                                        element.classList.remove("text-success");
+                                        element.classList.add("text-danger");
+                                    }
+                                }
+                            });
+                        }, 500);
+                        setTimeout(() => {
+                            clearInterval(blinkInterval);
+                        }, 5000);
+                    </script>
+                }
+            }
+        }
     </div>
 }
