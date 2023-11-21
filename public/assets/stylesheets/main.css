@@ -177,6 +177,10 @@ body {
     border: 0.15em solid var(--white);
     background-color: var(--navy);
     margin: 1em;
+    transition: background-color 0.3 ease;
+    &:hover{
+    background-color: var(--white)
+    }
 }
 
 @media screen and (max-width: 767px) {
