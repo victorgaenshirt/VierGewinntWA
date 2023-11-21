@@ -11,7 +11,7 @@ for (let iRow = 0; iRow < iGridSize; iRow++) {
         oCellDiv.className = "col-1";
         const oCellSpan = document.createElement("span");
         oCellSpan.className = "col bi bi-circle-fill";
-        oCellSpan.style = "font-size: 3em";
+        oCellSpan.style = "font-size: 2em";
 
 
         const sColor = document.getElementById(`${iRow}.${iCol}`).innerHTML
