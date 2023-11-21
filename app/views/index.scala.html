@@ -2,78 +2,56 @@
 @import de.htwg.se.VierGewinnt.model.gridComponent.gridBaseImpl.Chip
 @(grid: GridInterface, state: String, player: String)
 
-@main("Vier Gewinnt") {
-    <script>
-            function playMove(column) {
-                fetch("/insert/" + column, {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json, text/plain, */*',
-                        'Content-Type': 'application/json'
-                    },
-                    body: "",
-                }).then(() => location.reload());
+    @main("Vier Gewinnt") {
+
+
+        <div class="container mt-5 text-center p-3">
+            <h1 class="text-center text-info">Willkommen zu <br> Vier Gewinnt!</h1>
+
+            @if(state.contains("won")) {
+                <h2 class="text-center text-success">@player you won!!</h2>
+            } else {
+                <h2 class="text-center">@state @player it's your turn!</h2>
             }
 
-            function newGame(type) {
-                fetch("/newGame/" + type, {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json, text/plain, */*',
-                        'Content-Type': 'application/json'
-                    },
-                    body: "",
-                }).then(() => location.reload());
-            }
-    </script>
-
-    <div class="container mt-5 text-center p-3">
-        <h1 class="text-center text-info">Willkommen zu <br> Vier Gewinnt!</h1>
-
-        @if(state.contains("won")) {
-            <h2 class="text-center text-success">@player you won!!</h2>
-        } else {
-            <h2 class="text-center">@state @player it's your turn!</h2>
-        }
-
-        <div class="row justify-content-center mt-3">
-            <div class="col-md-6 text-center">
-                <button class="btn btn-primary btn-lg" onclick="newGame(0)">Spiel starten</button>
+            <div class="row justify-content-center mt-3">
+                <div class="col-md-6 text-center">
+                    <button class="btn btn-primary btn-lg" onclick="newGame(0)">Spiel starten</button>
+                </div>
             </div>
-        </div>
 
-        <div class="mt-5 container-fluid text-center" style="max-width: 500px">
-        @for(row <- 0 until grid.size) {
-            <div class="row d-flex justify-content-evenly">
-            @for(col <- 0 until grid.size) {
-                <div class="col-1">
-                @grid.getCell(row, col).value match {
-                    case Chip.RED => {
-                        <span id="@row.@col" class="col bi bi-circle-fill text-danger" style="font-size: 2em;" onclick="playMove(@col)"></span>
-                    }
-                    case Chip.YELLOW => {
-                        <span id="@row.@col" class="col bi bi-circle-fill text-warning" style="font-size: 2em;" onclick="playMove(@col)"></span>
-                    }
-                    case _ => {
-                        <span id="@row.@col" class="col bi bi-circle-fill text" style="font-size: 2em;" onclick="playMove(@col)"></span>
+            <div id="grid" class="mt-5 container-fluid text-center" style=" max-width: 500px"></div>
+            <div style="display: none">
+            @for(row <- 0 until grid.size) {
+                <div style="display = none">
+                @for(col <- 0 until grid.size) {
+                    @grid.getCell(row, col).value match {
+                        case Chip.RED => {
+                            <span id="@row.@col" style="display: none">@Chip.RED</span>
+                        }
+                        case Chip.YELLOW => {
+                            <span id="@row.@col" style="display: none">@Chip.YELLOW</span>
+                        }
+                        case _ => {
+                            <span id="@row.@col" style="display: none">@Chip.EMPTY</span>
+                        }
                     }
                 }
                 </div>
             }
             </div>
-        }
-        </div>
 
-        @if(state.contains("won")) {
-            @grid.checkWin() match {
-                case Some(v) => {
-                    @{
-                        val chip1 = v._2
-                        val chip2 = v._3
-                        val chip3 = v._4
-                        val chip4 = v._5
-                    }
-                    <script>
+            <div id="gridsize" style="display: none">@grid.size</div>
+            @if(state.contains("won")) {
+                @grid.checkWin() match {
+                    case Some(v) => {
+                        @{
+                            val chip1 = v._2
+                            val chip2 = v._3
+                            val chip3 = v._4
+                            val chip4 = v._5
+                        }
+                        <script>
                         const blinkInterval = setInterval(() => {
                             const elements = [
                                 "@v._2._1.@v._2._2",
@@ -107,8 +85,11 @@
                             clearInterval(blinkInterval);
                         }, 5000);
                     </script>
+                    }
                 }
             }
-        }
-    </div>
-}
+            <script src="@{
+                routes.Assets.versioned("javascripts/grid.js")
+            }"></script>
+        </div>
+    }
