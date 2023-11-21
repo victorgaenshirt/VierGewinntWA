@@ -1,7 +1,5 @@
-
-
 function newGame(type) {
-    fetch("/newGame/" + type, {
+    fetch(`/newGame/${type}`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json, text/plain, */*',
