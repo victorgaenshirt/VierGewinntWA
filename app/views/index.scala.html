@@ -26,38 +26,89 @@
                 }).then(() => location.reload());
             }
     </script>
-    <body>
-        <h1 class="title">Willkommen zu <br> Vier Gewinnt!</h1>
+
+    <div class="container mt-5 text-center p-3">
+        <h1 class="text-center text-info">Willkommen zu <br> Vier Gewinnt!</h1>
+
         @if(state.contains("won")) {
-            <h2 class="text win">@player you won!!</h2>
+            <h2 class="text-center text-success">@player you won!!</h2>
         } else {
-            <h2 class="text">@state @player it's your turn!</h2>
+            <h2 class="text-center">@state @player it's your turn!</h2>
         }
-        <div class="buttons">
-            <button class="button" onclick="newGame(0)">Spiel starten</button>
-            <form method="GET" action="/gameIntro">
-                <input class="button" type="submit" value="4 Gewinnt - Regeln">
-            </form>
+
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-6 text-center">
+                <button class="btn btn-primary btn-lg" onclick="newGame(0)">Spiel starten</button>
+            </div>
         </div>
 
-        <div id="grid">
-        @for(col <- 0 until grid.size) {
-            <div class="column">
-            @for(row <- grid.size - 1 to 0 by -1) {
+        <div class="mt-5 container-fluid text-center" style="max-width: 500px">
+        @for(row <- 0 until grid.size) {
+            <div class="row d-flex justify-content-evenly">
+            @for(col <- 0 until grid.size) {
+                <div class="col-1">
                 @grid.getCell(row, col).value match {
                     case Chip.RED => {
-                        <div class="circle chip-red" onclick="playMove(@col)"></div>
+                        <span id="@row.@col" class="col bi bi-circle-fill text-danger" style="font-size: 2em;" onclick="playMove(@col)"></span>
                     }
                     case Chip.YELLOW => {
-                        <div class="circle chip-yellow" onclick="playMove(@col)"></div>
+                        <span id="@row.@col" class="col bi bi-circle-fill text-warning" style="font-size: 2em;" onclick="playMove(@col)"></span>
                     }
                     case _ => {
-                        <div class="circle chip-empty" onclick="playMove(@col)"></div>
+                        <span id="@row.@col" class="col bi bi-circle-fill text" style="font-size: 2em;" onclick="playMove(@col)"></span>
                     }
                 }
+                </div>
             }
             </div>
         }
         </div>
-    </body>
+
+        @if(state.contains("won")) {
+            @grid.checkWin() match {
+                case Some(v) => {
+                    @{
+                        val chip1 = v._2
+                        val chip2 = v._3
+                        val chip3 = v._4
+                        val chip4 = v._5
+                    }
+                    <script>
+                        const blinkInterval = setInterval(() => {
+                            const elements = [
+                                "@v._2._1.@v._2._2",
+                                "@v._3._1.@v._3._2",
+                                "@v._4._1.@v._4._2",
+                                "@v._5._1.@v._5._2"
+                            ];
+
+                            elements.forEach(elementId => {
+                                const element = document.getElementById(elementId);
+                                if (@v._1.equals(2)) {
+                                    if (element.classList.contains("text-warning")) {
+                                        element.classList.remove("text-warning");
+                                        element.classList.add("text-success");
+                                    } else if (element.classList.contains("text-success")) {
+                                        element.classList.remove("text-success");
+                                        element.classList.add("text-warning");
+                                    }
+                                } else if (@v._1.equals(1)) {
+                                    if (element.classList.contains("text-danger")) {
+                                        element.classList.remove("text-danger");
+                                        element.classList.add("text-success");
+                                    } else if (element.classList.contains("text-success")) {
+                                        element.classList.remove("text-success");
+                                        element.classList.add("text-danger");
+                                    }
+                                }
+                            });
+                        }, 500);
+                        setTimeout(() => {
+                            clearInterval(blinkInterval);
+                        }, 5000);
+                    </script>
+                }
+            }
+        }
+    </div>
 }
