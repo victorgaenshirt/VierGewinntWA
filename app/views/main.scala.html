@@ -37,13 +37,7 @@
         @* And here's where we render the `Html` object containing
         * the page content. *@
         @content
-        <script>
-            // Toggle theme based on switch state
-            document.getElementById('themeToggle').addEventListener('change', function () {
-                const theme = this.checked ? 'dark' : 'light';
-                document.documentElement.setAttribute('data-bs-theme', theme);
-            });
-        </script>
         <script src="@routes.Assets.versioned("javascripts/main.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("javascripts/nightMode.js")" type="text/javascript"></script>
     </body>
 </html>

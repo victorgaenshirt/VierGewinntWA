@@ -9,10 +9,10 @@
     --green: #00f6a1
     */
 
-   .bg-success {
-   <div class="bg-success p-2" style="--bs-bg-opacity: .5;">This is 50% opacity success background</div>
+    .bg-success {
+    < div class = "bg-success p-2" style = "--bs-bg-opacity: .5;" > This is 50 % opacity success background < / div >
 
-   }
+    }
 }
 
 body {
@@ -177,33 +177,39 @@ body {
     border: 0.15em solid var(--white);
     background-color: var(--navy);
     margin: 1em;
+    transition: background-color 0.3 ease;
+    &:hover{
+    background-color: var(--white)
+    }
 }
+
 @media screen and (max-width: 767px) {
     .title {
         font-size: 3em;
     }
+
     .text {
         font-size: 0.8em;
     }
+
     .button {
         font-size: 1em;
     }
-    .circle{
+
+    .circle {
         width: 3em;
         height: 3em;
     }
 
 
-.card{
-         border: 1px solid #ccc;
-         padding: 20px;
-         margin: 10px;
-         text-align: center;
-         }
-
+    .card {
+        border: 1px solid #ccc;
+        padding: 20px;
+        margin: 10px;
+        text-align: center;
+    }
 
 
 }
-
 
 
