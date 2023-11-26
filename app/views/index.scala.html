@@ -21,37 +21,20 @@
             </div>
 
             <div id="grid" class="mt-5 container-fluid text-center" style=" max-width: 500px"></div>
-            <div style="display: none">
-            @for(row <- 0 until grid.size) {
-                <div style="display = none">
-                @for(col <- 0 until grid.size) {
-                    @grid.getCell(row, col).value match {
-                        case Chip.RED => {
-                            <span id="@row.@col" style="display: none">@Chip.RED</span>
-                        }
-                        case Chip.YELLOW => {
-                            <span id="@row.@col" style="display: none">@Chip.YELLOW</span>
-                        }
-                        case _ => {
-                            <span id="@row.@col" style="display: none">@Chip.EMPTY</span>
-                        }
-                    }
-                }
-                </div>
-            }
-            </div>
 
-            <div id="gridsize" style="display: none">@grid.size</div>
-            @if(state.contains("won")) {
-                @grid.checkWin() match {
-                    case Some(v) => {
-                        @{
-                            val chip1 = v._2
-                            val chip2 = v._3
-                            val chip3 = v._4
-                            val chip4 = v._5
-                        }
-                        <script>
+        </div>
+
+        <div id="gridsize" style="display: none">@grid.size</div>
+        @if(state.contains("won")) {
+            @grid.checkWin() match {
+                case Some(v) => {
+                    @{
+                        val chip1 = v._2
+                        val chip2 = v._3
+                        val chip3 = v._4
+                        val chip4 = v._5
+                    }
+                    <script>
                         const blinkInterval = setInterval(() => {
                             const elements = [
                                 "@v._2._1.@v._2._2",
@@ -85,14 +68,14 @@
                             clearInterval(blinkInterval);
                         }, 5000);
                     </script>
-                    }
                 }
             }
-            <script src="@{
-                routes.Assets.versioned("javascripts/grid.js")
-            }"></script>
-            <script src="@{
-                routes.Assets.versioned("javascripts/keyMapping.js")
-            }"></script>
+        }
+        <script src="@{
+            routes.Assets.versioned("javascripts/grid.js")
+        }"></script>
+        <script src="@{
+            routes.Assets.versioned("javascripts/keyMapping.js")
+        }"></script>
         </div>
     }
