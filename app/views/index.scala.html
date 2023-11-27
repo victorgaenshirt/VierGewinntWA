@@ -29,58 +29,10 @@
 
     </div>
 
-    <div id="gridsize" style="display: none">@grid.size</div>
-    @if(state.contains("won")) {
-        @grid.checkWin() match {
-            case Some(v) => {
-                @{
-                    val chip1 = v._2
-                    val chip2 = v._3
-                    val chip3 = v._4
-                    val chip4 = v._5
-                }
-                <script>
-                        const blinkInterval = setInterval(() => {
-                            const elements = [
-                                "@v._2._1.@v._2._2",
-                                "@v._3._1.@v._3._2",
-                                "@v._4._1.@v._4._2",
-                                "@v._5._1.@v._5._2"
-                            ];
-
-                            elements.forEach(elementId => {
-                                const element = document.getElementById(elementId);
-                                if (@v._1.equals(2)) {
-                                    if (element.classList.contains("text-warning")) {
-                                        element.classList.remove("text-warning");
-                                        element.classList.add("text-success");
-                                    } else if (element.classList.contains("text-success")) {
-                                        element.classList.remove("text-success");
-                                        element.classList.add("text-warning");
-                                    }
-                                } else if (@v._1.equals(1)) {
-                                    if (element.classList.contains("text-danger")) {
-                                        element.classList.remove("text-danger");
-                                        element.classList.add("text-success");
-                                    } else if (element.classList.contains("text-success")) {
-                                        element.classList.remove("text-success");
-                                        element.classList.add("text-danger");
-                                    }
-                                }
-                            });
-                        }, 500);
-                        setTimeout(() => {
-                            clearInterval(blinkInterval);
-                        }, 5000);
-                    </script>
-            }
-        }
-    }
     <script src="@{
         routes.Assets.versioned("javascripts/grid.js")
     }"></script>
     <script src="@{
         routes.Assets.versioned("javascripts/keyMapping.js")
     }"></script>
-    </div>
 }
