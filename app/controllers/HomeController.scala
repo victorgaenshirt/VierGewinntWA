@@ -56,6 +56,16 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
     Ok(views.html.gameIntro())
   }
 
+  def save(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
+    val savedPG: PlaygroundInterface = controller.save()
+    Ok(pgToJson(controller.playground, controller.printState))
+  }
+
+  def load(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
+    controller.load
+    Ok(pgToJson(savedPG))
+  }
+
   private def pgToJson(pg: PlaygroundInterface, state: String) = {
     Json.obj(
       "state" -> JsString(state),

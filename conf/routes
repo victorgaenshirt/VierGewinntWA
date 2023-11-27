@@ -13,4 +13,5 @@ POST        /insert/:x                controllers.HomeController.insert(x: Int)
 GET         /error/notfound           controllers.HomeController.notFound()
 GET         /error/badrequest         controllers.HomeController.badRequest()
 GET         /gameIntro                controllers.HomeController.gameIntro()
-
+POST        /save                     controllers.HomeController.save()
+GET         /load                     controllers.HomeController.load()
