@@ -27,6 +27,7 @@ function createBlankPlayground() {
 function update() {
     this.aCells.forEach((cell) => {
         let oCell = document.getElementById(`${cell.row}.${cell.col}`);
+        oCell.classList.remove("text", "text-warning", "text-danger")
         switch (cell.chip) {
             case "RED":
                 oCell.classList.add("text-warning");
@@ -38,39 +39,6 @@ function update() {
                 oCell.classList.add("text");
         }
     })
-
-    for (let iRow = 0; iRow < this.iGridSize; iRow++) {
-        const oRow = document.createElement("div")
-        oRow.className = "row d-flex justify-content-evenly"
-
-        for (let iCol = 0; iCol < this.iGridSize; iCol++) {
-            const oCellDiv = document.createElement("div");
-            oCellDiv.className = "col-1";
-            const oCellSpan = document.createElement("span");
-            oCellSpan.className = "col bi bi-circle-fill";
-            oCellSpan.style = "font-size: 2em";
-
-
-            const sColor = document.getElementById(`${iRow}.${iCol}`).innerHTML
-
-            switch (sColor) {
-                case "RED":
-                    oCellSpan.classList.add("text-warning");
-                    break;
-                case "YELLOW":
-                    oCellSpan.classList.add("text-danger");
-                    break;
-                default:
-                    oCellSpan.classList.add("text");
-            }
-            oCellDiv.addEventListener('click', function () {
-                playMove(iCol)
-            });
-            oCellDiv.appendChild(oCellSpan)
-            oRow.appendChild(oCellDiv)
-
-        }
-    }
 }
 
 function playMove(column) {
@@ -94,15 +62,36 @@ function newGame(type) {
             'Content-Type': 'application/json'
         },
         body: "",
-    }).then(() => {
-        this.iGridSize = 7;
-        if(!this.playgroundExists) {
-            this.createBlankPlayground()
-        }
+    }).then((response) => {
+        response.json().then((data) => this._parsePlayground(data))
     });
 }
 
-function _parsePlayground(data){
+function load() {
+    fetch(`/load`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: "",
+    }).then((response) => {
+        response.json().then((data) => this._parsePlayground(data))
+    });
+}
+
+function save() {
+    fetch(`/save`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: "",
+    });
+}
+
+function _parsePlayground(data) {
     const pg = data.playground;
     this.sState = data.state;
     this.iGridSize = pg.size;
@@ -110,6 +99,9 @@ function _parsePlayground(data){
     this.oCurrentPlayer = pg.currentPlayer;
     this.oOtherPlayer = pg.otherPlayer;
     this.aCells = pg.cells;
+    if (!this.playgroundExists) {
+        this.createBlankPlayground()
+    }
     this.update();
 }
 

@@ -3,11 +3,9 @@ package controllers
 import com.google.inject.Guice
 import de.htwg.se.VierGewinnt.VierGewinntModule
 import de.htwg.se.VierGewinnt.controller.controllerComponent.ControllerInterface
-import de.htwg.se.VierGewinnt.model.fileIoComponent.FileIOInterface
 import de.htwg.se.VierGewinnt.model.playgroundComponent.PlaygroundInterface
 import de.htwg.se.VierGewinnt.model.playgroundComponent.playgroundBaseImpl.PlaygroundPvP
 import de.htwg.se.VierGewinnt.util.Move
-import play.api._
 import play.api.libs.json.{JsNumber, JsString, Json}
 import play.api.mvc._
 
@@ -19,8 +17,8 @@ import javax.inject._
  */
 @Singleton
 class HomeController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
-  val injector = Guice.createInjector(new VierGewinntModule)
-  val controller = injector.getInstance(classOf[ControllerInterface])
+  private val injector = Guice.createInjector(new VierGewinntModule)
+  val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
 
   /**
    * Create an Action to render an HTML page.
@@ -30,40 +28,40 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
    * a path of `/`.
    */
 
-  def index() = Action { implicit request: Request[AnyContent] =>
+  def index(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.index(controller.playground.grid, controller.printState, controller.playground.player.head.getName()))
   }
 
-  def newGame(gameType: Int) = Action { implicit request: Request[AnyContent] =>
+  def newGame(gameType: Int): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
     controller.setupGame(gameType, 7)
     Ok(pgToJson(controller.playground, controller.printState))
   }
 
-  def insert(x: Int) = Action { implicit request: Request[AnyContent] =>
+  def insert(x: Int): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
     controller.doAndPublish(controller.insChip, Move(x))
     Ok(pgToJson(controller.playground, controller.printState))
   }
 
-  def notFound() = Action { implicit request: Request[AnyContent] =>
+  def notFound(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
     NotFound(views.html.notFound())
   }
 
-  def badRequest() = Action { implicit request: Request[AnyContent] =>
+  def badRequest(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
     BadRequest(views.html.notFound())
   }
 
-  def gameIntro() = Action { implicit request: Request[AnyContent] =>
+  def gameIntro(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.gameIntro())
   }
 
   def save(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
-    val savedPG: PlaygroundInterface = controller.save()
-    Ok(pgToJson(controller.playground, controller.printState))
+    controller.save
+    Ok("")
   }
 
   def load(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
     controller.load
-    Ok(pgToJson(savedPG))
+    Ok(pgToJson(controller.playground, controller.printState))
   }
 
   private def pgToJson(pg: PlaygroundInterface, state: String) = {

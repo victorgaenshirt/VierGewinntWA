@@ -2,45 +2,44 @@
 @import de.htwg.se.VierGewinnt.model.gridComponent.gridBaseImpl.Chip
 @(grid: GridInterface, state: String, player: String)
 
-    @main("Vier Gewinnt") {
+@main("Vier Gewinnt") {
 
+    <div class="container mt-5 text-center p-3">
+        <h1 class="text-center text-info">Willkommen zu <br> Vier Gewinnt!</h1>
 
-        <div class="container mt-5 text-center p-3">
-            <h1 class="text-center text-info">Willkommen zu <br> Vier Gewinnt!</h1>
+        @if(state.contains("won")) {
+            <h2 class="text-center text-success">@player you won!!</h2>
+        } else {
+            <h2 class="text-center">@state @player it's your turn!</h2>
+        }
 
-            @if(state.contains("won")) {
-                <h2 class="text-center text-success">@player you won!!</h2>
-            } else {
-                <h2 class="text-center">@state @player it's your turn!</h2>
-            }
-
-            <div class="row justify-content-center mt-3">
-                <div class="col-md-6 text-center">
-                    <button class="btn btn-primary btn-lg" onclick="newGame(0)">Spiel starten</button>
-                </div>
-                <div class="col-md-6 text-center">
-                    <button class="btn btn-primary btn-lg" onclick="load">Spiel laden</button>
-                </div>
-                <div class="col-md-6 text-center">
-                    <button class="btn btn-primary btn-lg" onclick="save">Spiel speichern</button>
-                </div>
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-6 text-center">
+                <button class="btn btn-primary btn-lg" onclick="newGame(0)">Spiel starten</button>
             </div>
-
-            <div id="grid" class="mt-5 container-fluid text-center" style=" max-width: 500px"></div>
-
+            <div class="col-md-6 text-center">
+                <button class="btn btn-primary btn-lg" onclick="save()">Spiel speichern</button>
+            </div>
+            <div class="col-md-6 text-center">
+                <button class="btn btn-primary btn-lg" onclick="load()">Spiel laden</button>
+            </div>
         </div>
 
-        <div id="gridsize" style="display: none">@grid.size</div>
-        @if(state.contains("won")) {
-            @grid.checkWin() match {
-                case Some(v) => {
-                    @{
-                        val chip1 = v._2
-                        val chip2 = v._3
-                        val chip3 = v._4
-                        val chip4 = v._5
-                    }
-                    <script>
+        <div id="grid" class="mt-5 container-fluid text-center" style=" max-width: 500px"></div>
+
+    </div>
+
+    <div id="gridsize" style="display: none">@grid.size</div>
+    @if(state.contains("won")) {
+        @grid.checkWin() match {
+            case Some(v) => {
+                @{
+                    val chip1 = v._2
+                    val chip2 = v._3
+                    val chip3 = v._4
+                    val chip4 = v._5
+                }
+                <script>
                         const blinkInterval = setInterval(() => {
                             const elements = [
                                 "@v._2._1.@v._2._2",
@@ -74,14 +73,14 @@
                             clearInterval(blinkInterval);
                         }, 5000);
                     </script>
-                }
             }
         }
-        <script src="@{
-            routes.Assets.versioned("javascripts/grid.js")
-        }"></script>
-        <script src="@{
-            routes.Assets.versioned("javascripts/keyMapping.js")
-        }"></script>
-        </div>
     }
+    <script src="@{
+        routes.Assets.versioned("javascripts/grid.js")
+    }"></script>
+    <script src="@{
+        routes.Assets.versioned("javascripts/keyMapping.js")
+    }"></script>
+    </div>
+}
