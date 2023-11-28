@@ -4,7 +4,7 @@
 
 @main("Vier Gewinnt") {
 
-    <div class="container mt-5 text-center p-3">
+    <div class="container-fluid mt-5 p-3 position-relative">
         <h1 class="text-center text-info">Willkommen zu <br> Vier Gewinnt!</h1>
 
         @if(state.contains("won")) {
@@ -13,15 +13,23 @@
             <h2 class="text-center">@state @player it's your turn!</h2>
         }
 
-        <div class="row justify-content-center mt-3">
-            <div class="col-md-6 text-center">
-                <button class="btn btn-primary btn-lg" onclick="newGame(0)">Spiel starten</button>
+        <div class="row justify-content-center mt-5">
+            <div class="col-sm-2 text-center">
+                <button class="btn btn-success btn-lg" onclick="newGame(0)">Neues Spiel <i class="bi bi-play-circle-fill"></i></button>
             </div>
-            <div class="col-md-6 text-center">
-                <button class="btn btn-primary btn-lg" onclick="save()">Spiel speichern</button>
+            <div class="col-lg-2 text-center">
+                <button class="btn btn-primary btn-lg" onclick="save()">Speichern <i class="bi bi-floppy-fill"></i></button>
             </div>
-            <div class="col-md-6 text-center">
-                <button class="btn btn-primary btn-lg" onclick="load()">Spiel laden</button>
+            <div class="col-lg-2 text-center">
+                <button class="btn btn-primary btn-lg" onclick="load()">Laden <i class="bi bi-cloud-download-fill"></i></button>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-5">
+            <div class="text-center col col-lg-2">
+                <button class="btn btn-secondary" onclick="undo()">Undo <i class="bi bi-arrow-counterclockwise"></i></button>
+            </div>
+            <div class="text-center col col-lg-2">
+                <button class="btn btn-secondary" onclick="redo()">Redo <i class="bi bi-arrow-clockwise"></i></button>
             </div>
         </div>
 
@@ -29,58 +37,10 @@
 
     </div>
 
-    <div id="gridsize" style="display: none">@grid.size</div>
-    @if(state.contains("won")) {
-        @grid.checkWin() match {
-            case Some(v) => {
-                @{
-                    val chip1 = v._2
-                    val chip2 = v._3
-                    val chip3 = v._4
-                    val chip4 = v._5
-                }
-                <script>
-                        const blinkInterval = setInterval(() => {
-                            const elements = [
-                                "@v._2._1.@v._2._2",
-                                "@v._3._1.@v._3._2",
-                                "@v._4._1.@v._4._2",
-                                "@v._5._1.@v._5._2"
-                            ];
-
-                            elements.forEach(elementId => {
-                                const element = document.getElementById(elementId);
-                                if (@v._1.equals(2)) {
-                                    if (element.classList.contains("text-warning")) {
-                                        element.classList.remove("text-warning");
-                                        element.classList.add("text-success");
-                                    } else if (element.classList.contains("text-success")) {
-                                        element.classList.remove("text-success");
-                                        element.classList.add("text-warning");
-                                    }
-                                } else if (@v._1.equals(1)) {
-                                    if (element.classList.contains("text-danger")) {
-                                        element.classList.remove("text-danger");
-                                        element.classList.add("text-success");
-                                    } else if (element.classList.contains("text-success")) {
-                                        element.classList.remove("text-success");
-                                        element.classList.add("text-danger");
-                                    }
-                                }
-                            });
-                        }, 500);
-                        setTimeout(() => {
-                            clearInterval(blinkInterval);
-                        }, 5000);
-                    </script>
-            }
-        }
-    }
     <script src="@{
         routes.Assets.versioned("javascripts/grid.js")
     }"></script>
     <script src="@{
         routes.Assets.versioned("javascripts/keyMapping.js")
     }"></script>
-    </div>
 }

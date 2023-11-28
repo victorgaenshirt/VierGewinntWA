@@ -64,6 +64,26 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
     Ok(pgToJson(controller.playground, controller.printState))
   }
 
+  def undo(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
+    controller.doAndPublish(controller.undo)
+    Ok(pgToJson(controller.playground, controller.printState))
+  }
+
+  def redo(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
+    controller.doAndPublish(controller.redo)
+    Ok(pgToJson(controller.playground, controller.printState))
+  }
+
+  def winnerChips(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
+    controller.winnerChips match {
+      case None => Ok(JsString(""))
+      case Some(winningChips) =>
+        Ok(Json.obj(
+          "values" -> winningChips,
+        ))
+    }
+  }
+
   private def pgToJson(pg: PlaygroundInterface, state: String) = {
     Json.obj(
       "state" -> JsString(state),
