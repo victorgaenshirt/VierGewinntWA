@@ -59,6 +59,7 @@ function playMove(column) {
 }
 
 function newGame(type) {
+    this.showToast('abc')
     fetch(`/newGame/${type}`, {
         method: 'POST',
         headers: {
@@ -69,6 +70,7 @@ function newGame(type) {
     }).then((response) => {
         response.json().then((data) => this._parsePlayground(data))
     });
+
 }
 
 function load() {
@@ -176,3 +178,14 @@ function _parsePlayground(data) {
     this.update();
 }
 
+function showToast(message) {
+        var toast = document.createElement("div");
+        toast.className = "toast";
+        toast.innerHTML = "abc";
+
+        document.body.appendChild(toast);
+
+        setTimeout(function() {
+                    document.body.removeChild(toast);
+                }, 4000);
+        }
