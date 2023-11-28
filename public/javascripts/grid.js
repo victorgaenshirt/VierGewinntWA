@@ -29,10 +29,10 @@ function update() {
         let oCell = document.getElementById(`${cell.row}.${cell.col}`);
         oCell.classList.remove("text", "text-warning", "text-danger", "text-success")
         switch (cell.chip) {
-            case "RED":
+            case "YELLOW":
                 oCell.classList.add("text-warning");
                 break;
-            case "YELLOW":
+            case "RED":
                 oCell.classList.add("text-danger");
                 break;
             default:
@@ -166,6 +166,7 @@ function winAnimation(aChips) {
 
 function _parsePlayground(data) {
     const pg = data.playground;
+    this.data = data;
     this.sState = data.state;
     this.iGridSize = pg.size;
     this.iGametype = pg.gameType;
@@ -179,13 +180,28 @@ function _parsePlayground(data) {
 }
 
 function showToast(message) {
-        var toast = document.createElement("div");
-        toast.className = "toast";
-        toast.innerHTML = "abc";
+    var toast = document.createElement("div");
+    toast.className = "toast";
+    toast.innerHTML = "abc";
 
-        document.body.appendChild(toast);
+    document.body.appendChild(toast);
 
-        setTimeout(function() {
-                    document.body.removeChild(toast);
-                }, 4000);
-        }
+    setTimeout(function () {
+        document.body.removeChild(toast);
+    }, 4000);
+}
+
+function suggestion(){
+    fetch(`http://localhost:3011/api/suggestions`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+        },
+        body: data
+    }).then(response => response.json().then((data) => {
+        oElement = document.getElementById("suggestion");
+        oElement.innerHTML = `AI suggests Player ${data.player} to play column: ${data.suggestedColumn}`
+    }));
+}
