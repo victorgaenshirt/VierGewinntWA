@@ -95,6 +95,32 @@ function save() {
     });
 }
 
+function undo() {
+    fetch(`/undo`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: "",
+    }).then((response) => {
+        response.json().then((data) => this._parsePlayground(data))
+    });
+}
+
+function redo() {
+    fetch(`/redo`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: "",
+    }).then((response) => {
+        response.json().then((data) => this._parsePlayground(data))
+    });
+}
+
 function fetchWinningChips() {
     fetch(`/winnerChips`, {
         method: 'GET',
