@@ -48,3 +48,5 @@ VierGewinnt.log
 # Application backup
 playground.json
 playground.xml
+
+**/node_modules
