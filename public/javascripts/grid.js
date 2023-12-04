@@ -136,7 +136,8 @@ function fetchWinningChips() {
 }
 
 function winAnimation(aChips) {
-    const iPlayer = aChips.values[0];
+    const iPlayer = aC
+    hips.values[0];
     const aChipCoordinates = aChips.values.splice(1, 4);
 
     const blinkInterval = setInterval(() => {
