@@ -1,5 +1,6 @@
 package controllers
 
+import akka.actor.{ActorRef, Props}
 import com.google.inject.Guice
 import de.htwg.se.VierGewinnt.VierGewinntModule
 import de.htwg.se.VierGewinnt.controller.controllerComponent.ControllerInterface
@@ -8,6 +9,10 @@ import de.htwg.se.VierGewinnt.model.playgroundComponent.playgroundBaseImpl.Playg
 import de.htwg.se.VierGewinnt.util.Move
 import play.api.libs.json.{JsNumber, JsString, Json}
 import play.api.mvc._
+import play.api.libs.streams.ActorFlow
+import akka.actor.ActorSystem
+import akka.stream.Materializer
+import akka.actor._
 
 import javax.inject._
 
@@ -16,7 +21,8 @@ import javax.inject._
  * application's home page.
  */
 @Singleton
-class HomeController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
+class HomeController @Inject()(val controllerComponents: ControllerComponents)
+(implicit system: ActorSystem, mat: Materializer) extends BaseController {
   private val injector = Guice.createInjector(new VierGewinntModule)
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
 
@@ -83,6 +89,30 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
         ))
     }
   }
+
+  def socket = WebSocket.accept[String, String] { request =>
+    ActorFlow.actorRef { out =>
+      println("Connect received")
+      MyWebSocketActor.props(out)
+    }
+  }
+  object MyWebSocketActor {
+    def props(out: ActorRef) = {
+      println("Object created")
+      Props(new MyWebSocketActor(out))
+    }
+  }
+
+  class MyWebSocketActor(out: ActorRef) extends Actor {
+    println("Class created")
+
+    def receive = {
+      case msg: String =>
+        out ! ("I received your message: " + msg)
+        println("Received message " + msg)
+    }
+  }
+
 
   private def pgToJson(pg: PlaygroundInterface, state: String) = {
     Json.obj(
