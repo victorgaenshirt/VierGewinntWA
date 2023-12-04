@@ -19,4 +19,3 @@ POST        /undo                     controllers.HomeController.undo()
 POST        /redo                     controllers.HomeController.redo()
 GET         /winnerChips              controllers.HomeController.winnerChips()
 GET         /websocket                controllers.HomeController.socket
-```
