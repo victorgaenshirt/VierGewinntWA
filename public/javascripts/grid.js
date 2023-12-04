@@ -1,6 +1,7 @@
 
 function createBlankPlayground() {
     this.playgroundExists = true;
+    connectWebSocket();
     const oGrid = document.getElementById("grid");
     for (let iRow = 0; iRow < this.iGridSize; iRow++) {
         const oRow = document.createElement("div")
