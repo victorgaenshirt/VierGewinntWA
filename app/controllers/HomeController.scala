@@ -1,18 +1,11 @@
 package controllers
 
-import akka.actor.{ActorRef, Props}
+import akka.actor._
 import com.google.inject.Guice
 import de.htwg.se.VierGewinnt.VierGewinntModule
 import de.htwg.se.VierGewinnt.controller.controllerComponent.ControllerInterface
-import de.htwg.se.VierGewinnt.model.playgroundComponent.PlaygroundInterface
-import de.htwg.se.VierGewinnt.model.playgroundComponent.playgroundBaseImpl.PlaygroundPvP
 import de.htwg.se.VierGewinnt.util.Move
-import play.api.libs.json.{JsNumber, JsString, Json}
 import play.api.mvc._
-import play.api.libs.streams.ActorFlow
-import akka.actor.ActorSystem
-import akka.stream.Materializer
-import akka.actor._
 
 import javax.inject._
 
@@ -22,7 +15,7 @@ import javax.inject._
  */
 @Singleton
 class HomeController @Inject()(val controllerComponents: ControllerComponents)
-(implicit system: ActorSystem, mat: Materializer) extends BaseController {
+                              (implicit system: ActorSystem, mat: Materializer) extends BaseController {
   private val injector = Guice.createInjector(new VierGewinntModule)
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
 
@@ -96,6 +89,7 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents)
       MyWebSocketActor.props(out)
     }
   }
+
   object MyWebSocketActor {
     def props(out: ActorRef) = {
       println("Object created")

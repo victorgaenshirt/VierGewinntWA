@@ -1,4 +1,3 @@
-
 function createBlankPlayground() {
     this.playgroundExists = true;
     connectWebSocket();
@@ -136,8 +135,7 @@ function fetchWinningChips() {
 }
 
 function winAnimation(aChips) {
-    const iPlayer = aC
-    hips.values[0];
+    const iPlayer = aChips.values[0];
     const aChipCoordinates = aChips.values.splice(1, 4);
 
     const blinkInterval = setInterval(() => {
@@ -194,8 +192,8 @@ function showToast(message) {
     }, 4000);
 }
 
-function suggestion(){
-    fetch(`http://localhost:3011/api/suggestions`, {
+function suggestion() {
+    fetch(`http://localhost:3000/api/suggestions`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json, text/plain, */*',
@@ -225,13 +223,11 @@ function connectWebSocket() {
         console.log("Error" + error + "occurred");
     }
     webSocket.onmessage = function (event) {
-        if(typeof event.data === "string"){
+        if (typeof event.data === "string") {
             console.log('String message received: ' + event.data);
-        }
-        else if(event.data instanceof ArrayBuffer){
+        } else if (event.data instanceof ArrayBuffer) {
             console.log('ArrayBuffer received: ' + event.data);
-        }
-        else if(event.data instanceof Blob){
+        } else if (event.data instanceof Blob) {
             console.log('Blob received: ' + event.data);
         }
     }
