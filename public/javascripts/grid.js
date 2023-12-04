@@ -191,8 +191,8 @@ function showToast(message) {
     }, 4000);
 }
 
-function suggestion(){
-    fetch(`http://localhost:3011/api/suggestions`, {
+function suggestion() {
+    fetch(`http://localhost:3000/api/suggestions`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json, text/plain, */*',
