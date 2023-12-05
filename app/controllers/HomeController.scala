@@ -1,12 +1,16 @@
 package controllers
 
 import akka.actor._
+import akka.stream.Materializer
 import com.google.inject.Guice
 import de.htwg.se.VierGewinnt.VierGewinntModule
 import de.htwg.se.VierGewinnt.controller.controllerComponent.ControllerInterface
-import de.htwg.se.VierGewinnt.util.Move
+import de.htwg.se.VierGewinnt.model.playgroundComponent.PlaygroundInterface
+import de.htwg.se.VierGewinnt.model.playgroundComponent.playgroundBaseImpl.PlaygroundPvP
+import de.htwg.se.VierGewinnt.util.{Move, Observer}
+import play.api.libs.json.{JsNumber, JsString, Json}
+import play.api.libs.streams.ActorFlow
 import play.api.mvc._
-
 import javax.inject._
 
 /**
@@ -97,14 +101,17 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents)
     }
   }
 
-  class MyWebSocketActor(out: ActorRef) extends Actor {
+  class MyWebSocketActor(out: ActorRef) extends Actor with Observer {
     println("Class created")
+    controller.add(this)
 
-    def receive = {
+    def receive: Receive = {
       case msg: String =>
         out ! ("I received your message: " + msg)
         println("Received message " + msg)
     }
+
+    override def update: Unit = out ! Json.stringify(pgToJson(controller.playground, controller.printState))
   }
 
 

@@ -1,6 +1,5 @@
 function createBlankPlayground() {
     this.playgroundExists = true;
-    connectWebSocket();
     const oGrid = document.getElementById("grid");
     for (let iRow = 0; iRow < this.iGridSize; iRow++) {
         const oRow = document.createElement("div")
@@ -54,8 +53,6 @@ function playMove(column) {
             'Content-Type': 'application/json'
         },
         body: "",
-    }).then((response) => {
-        response.json().then((data) => this._parsePlayground(data))
     });
 }
 
@@ -68,10 +65,7 @@ function newGame(type) {
             'Content-Type': 'application/json'
         },
         body: "",
-    }).then((response) => {
-        response.json().then((data) => this._parsePlayground(data))
     });
-
 }
 
 function load() {
@@ -82,8 +76,6 @@ function load() {
             'Content-Type': 'application/json'
         },
         body: "",
-    }).then((response) => {
-        response.json().then((data) => this._parsePlayground(data))
     });
 }
 
@@ -106,8 +98,6 @@ function undo() {
             'Content-Type': 'application/json'
         },
         body: "",
-    }).then((response) => {
-        response.json().then((data) => this._parsePlayground(data))
     });
 }
 
@@ -119,8 +109,6 @@ function redo() {
             'Content-Type': 'application/json'
         },
         body: "",
-    }).then((response) => {
-        response.json().then((data) => this._parsePlayground(data))
     });
 }
 
@@ -224,7 +212,10 @@ function connectWebSocket() {
     }
     webSocket.onmessage = function (event) {
         if (typeof event.data === "string") {
-            console.log('String message received: ' + event.data);
+            try {
+                _parsePlayground(JSON.parse(event.data))
+            } catch (e) {
+            }
         } else if (event.data instanceof ArrayBuffer) {
             console.log('ArrayBuffer received: ' + event.data);
         } else if (event.data instanceof Blob) {
@@ -232,5 +223,10 @@ function connectWebSocket() {
         }
     }
 }
+
+
+$( document ).ready(function() {
+    connectWebSocket()
+});
 
 

@@ -2,52 +2,54 @@
 @import de.htwg.se.VierGewinnt.model.gridComponent.gridBaseImpl.Chip
 @(grid: GridInterface, state: String, player: String)
 
-@main("Vier Gewinnt") {
+    @main("Vier Gewinnt") {
 
-    <div class="container-fluid mt-5 p-3 position-relative">
-        <h1 class="text-center text-info">Willkommen zu <br> Vier Gewinnt!</h1>
+        <div class="container-fluid mt-5 p-3 position-relative">
+            <h1 class="text-center text-info">Willkommen zu <br> Vier Gewinnt!</h1>
 
-        @if(state.contains("won")) {
-            <h2 class="text-center text-success">@player you won!!</h2>
-        } else {
-            <h2 class="text-center">@state @player it's your turn!</h2>
-        }
+            @if(state.contains("won")) {
+                <h2 class="text-center text-success">@player you won!!</h2>
+            } else {
+                <h2 class="text-center">@state @player it's your turn!</h2>
+            }
 
-        <div class="row justify-content-center mt-5">
-            <div class="col-sm-2 text-center">
-                <button class="btn btn-success btn-lg" onclick="newGame(0)">
-                    Neues Spiel <i class="bi bi-play-circle-fill"></i></button>
+            <div class="row justify-content-center mt-5">
+                <div class="col-sm-2 text-center">
+                    <button class="btn btn-success btn-lg" onclick="newGame(0)">
+                        Neues Spiel <i class="bi bi-play-circle-fill"></i></button>
+                </div>
+                <div class="col-lg-2 text-center">
+                    <button class="btn btn-primary btn-lg" onclick="save()">
+                        Speichern <i class="bi bi-floppy-fill"></i></button>
+                </div>
+                <div class="col-lg-2 text-center">
+                    <button class="btn btn-primary btn-lg" onclick="load()">
+                        Laden <i class="bi bi-cloud-download-fill"></i></button>
+                </div>
+                <div class="col-lg-2 text-center">
+                    <button class="btn btn-primary btn-lg" onclick="suggestion()">
+                        Tipp! <i class="bi bi-cloud-download-fill"></i></button>
+                </div>
             </div>
-            <div class="col-lg-2 text-center">
-                <button class="btn btn-primary btn-lg" onclick="save()">Speichern <i class="bi bi-floppy-fill"></i></button>
+            <div class="row justify-content-center mt-5">
+                <div class="text-center col col-lg-2">
+                    <button class="btn btn-secondary" onclick="undo()">
+                        Undo <i class="bi bi-arrow-counterclockwise"></i></button>
+                </div>
+                <div class="text-center col col-lg-2">
+                    <button class="btn btn-secondary" onclick="redo()">Redo <i class="bi bi-arrow-clockwise"></i></button>
+                </div>
             </div>
-            <div class="col-lg-2 text-center">
-                <button class="btn btn-primary btn-lg" onclick="load()">
-                    Laden <i class="bi bi-cloud-download-fill"></i></button>
-            </div>
-            <div class="col-lg-2 text-center">
-                <button class="btn btn-primary btn-lg" onclick="suggestion()">
-                    Tipp! <i class="bi bi-cloud-download-fill"></i></button>
-            </div>
+            <div id="suggestion" class="text text-center"></div>
+            <div id="grid" class="mt-5 container-fluid text-center" style=" max-width: 500px"></div>
+
+
         </div>
-        <div class="row justify-content-center mt-5">
-            <div class="text-center col col-lg-2">
-                <button class="btn btn-secondary" onclick="undo()">Undo <i class="bi bi-arrow-counterclockwise"></i></button>
-            </div>
-            <div class="text-center col col-lg-2">
-                <button class="btn btn-secondary" onclick="redo()">Redo <i class="bi bi-arrow-clockwise"></i></button>
-            </div>
-        </div>
-        <div id="suggestion" class="text text-center"></div>
-        <div id="grid" class="mt-5 container-fluid text-center" style=" max-width: 500px"></div>
 
-
-    </div>
-
-    <script src="@{
-        routes.Assets.versioned("javascripts/grid.js")
-    }"></script>
-    <script src="@{
-        routes.Assets.versioned("javascripts/keyMapping.js")
-    }"></script>
-}
+        <script src="@{
+            routes.Assets.versioned("javascripts/grid.js")
+        }"></script>
+        <script src="@{
+            routes.Assets.versioned("javascripts/keyMapping.js")
+        }"></script>
+    }
