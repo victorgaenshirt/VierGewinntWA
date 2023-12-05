@@ -1,12 +1,19 @@
 package controllers
 
 import akka.actor._
+import akka.actor.typed.pubsub.Topic.publish
 import com.google.inject.Guice
 import de.htwg.se.VierGewinnt.VierGewinntModule
 import de.htwg.se.VierGewinnt.controller.controllerComponent.ControllerInterface
 import de.htwg.se.VierGewinnt.util.Move
 import play.api.mvc._
+import akka.stream.Materializer
+import de.htwg.se.VierGewinnt.model.playgroundComponent.PlaygroundInterface
+import de.htwg.se.VierGewinnt.model.playgroundComponent.playgroundBaseImpl.PlaygroundPvP
+import play.api.libs.json.{JsNumber, JsString, Json}
+import play.api.libs.streams.ActorFlow
 
+import scala.swing.Reactor
 import javax.inject._
 
 /**
@@ -16,9 +23,8 @@ import javax.inject._
 @Singleton
 class HomeController @Inject()(val controllerComponents: ControllerComponents)
                               (implicit system: ActorSystem, mat: Materializer) extends BaseController {
-  private val injector = Guice.createInjector(new VierGewinntModule)
-  val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
 
+  val NotifiyingController = new NotifiyingController
   /**
    * Create an Action to render an HTML page.
    *
@@ -27,18 +33,49 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents)
    * a path of `/`.
    */
 
+  def socket = WebSocket.accept[String, String] { request =>
+    ActorFlow.actorRef { out =>
+      println("Connect received")
+      vierGewinntActor.props(out)
+    }
+  }
+
+  object vierGewinntActor {
+    def props(out: ActorRef) = {
+      println("Object created")
+      Props(new vierGewinntActor(out))
+    }
+  }
+
+  class vierGewinntActor(out: ActorRef) extends Actor with Reactor {
+    listenTo(NotifiyingController)
+
+    def receive = {
+      case msg: String =>
+        out ! ("I received your message: " + msg)
+        println("Received message " + msg)
+    }
+
+    reactions += {
+      case event: ChangeNotificationEvent =>
+        println("Received event " + event)
+        out ! pgToJson(NotifiyingController.controller.playground, NotifiyingController.controller.printState)
+    }
+
+  }
+
   def index(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.index(controller.playground.grid, controller.printState, controller.playground.player.head.getName()))
+    Ok(views.html.index(NotifiyingController.controller.playground.grid, NotifiyingController.controller.printState, NotifiyingController.controller.playground.player.head.getName()))
   }
 
   def newGame(gameType: Int): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
-    controller.setupGame(gameType, 7)
-    Ok(pgToJson(controller.playground, controller.printState))
+    NotifiyingController.controller.setupGame(gameType, 7)
+    Ok(pgToJson(NotifiyingController.controller.playground, NotifiyingController.controller.printState))
   }
 
   def insert(x: Int): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
-    controller.doAndPublish(controller.insChip, Move(x))
-    Ok(pgToJson(controller.playground, controller.printState))
+    NotifiyingController.controller.doAndPublish(NotifiyingController.controller.insChip, Move(x))
+    Ok(pgToJson(NotifiyingController.controller.playground, NotifiyingController.controller.printState))
   }
 
   def notFound(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
@@ -54,27 +91,27 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents)
   }
 
   def save(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
-    controller.save
+    NotifiyingController.controller.save
     Ok("")
   }
 
   def load(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
-    controller.load
-    Ok(pgToJson(controller.playground, controller.printState))
+    NotifiyingController.controller.load
+    Ok(pgToJson(NotifiyingController.controller.playground, NotifiyingController.controller.printState))
   }
 
   def undo(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
-    controller.doAndPublish(controller.undo)
-    Ok(pgToJson(controller.playground, controller.printState))
+    NotifiyingController.controller.doAndPublish(NotifiyingController.controller.undo)
+    Ok(pgToJson(NotifiyingController.controller.playground, NotifiyingController.controller.printState))
   }
 
   def redo(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
-    controller.doAndPublish(controller.redo)
-    Ok(pgToJson(controller.playground, controller.printState))
+    NotifiyingController.controller.doAndPublish(NotifiyingController.controller.redo)
+    Ok(pgToJson(NotifiyingController.controller.playground, NotifiyingController.controller.printState))
   }
 
   def winnerChips(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
-    controller.winnerChips match {
+    NotifiyingController.controller.winnerChips match {
       case None => Ok(JsString(""))
       case Some(winningChips) =>
         Ok(Json.obj(
@@ -83,29 +120,7 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents)
     }
   }
 
-  def socket = WebSocket.accept[String, String] { request =>
-    ActorFlow.actorRef { out =>
-      println("Connect received")
-      MyWebSocketActor.props(out)
-    }
-  }
 
-  object MyWebSocketActor {
-    def props(out: ActorRef) = {
-      println("Object created")
-      Props(new MyWebSocketActor(out))
-    }
-  }
-
-  class MyWebSocketActor(out: ActorRef) extends Actor {
-    println("Class created")
-
-    def receive = {
-      case msg: String =>
-        out ! ("I received your message: " + msg)
-        println("Received message " + msg)
-    }
-  }
 
 
   private def pgToJson(pg: PlaygroundInterface, state: String) = {
