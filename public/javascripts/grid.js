@@ -53,8 +53,6 @@ function playMove(column) {
             'Content-Type': 'application/json'
         },
         body: "",
-    }).then((response) => {
-        response.json().then((data) => this._parsePlayground(data))
     });
 }
 
@@ -67,10 +65,7 @@ function newGame(type) {
             'Content-Type': 'application/json'
         },
         body: "",
-    }).then((response) => {
-        response.json().then((data) => this._parsePlayground(data))
     });
-
 }
 
 function load() {
@@ -81,8 +76,6 @@ function load() {
             'Content-Type': 'application/json'
         },
         body: "",
-    }).then((response) => {
-        response.json().then((data) => this._parsePlayground(data))
     });
 }
 
@@ -105,8 +98,6 @@ function undo() {
             'Content-Type': 'application/json'
         },
         body: "",
-    }).then((response) => {
-        response.json().then((data) => this._parsePlayground(data))
     });
 }
 
@@ -118,8 +109,6 @@ function redo() {
             'Content-Type': 'application/json'
         },
         body: "",
-    }).then((response) => {
-        response.json().then((data) => this._parsePlayground(data))
     });
 }
 
@@ -140,7 +129,7 @@ function winAnimation(aChips) {
     const blinkInterval = setInterval(() => {
         aChipCoordinates.forEach(item => {
             const oChipElement = document.getElementById(`${item[0]}.${item[1]}`);
-            if (iPlayer === 1) {
+            if (iPlayer === 2) {
                 if (oChipElement.classList.contains("text-warning")) {
                     oChipElement.classList.remove("text-warning");
                     oChipElement.classList.add("text-success");
@@ -148,7 +137,7 @@ function winAnimation(aChips) {
                     oChipElement.classList.remove("text-success");
                     oChipElement.classList.add("text-warning");
                 }
-            } else if (iPlayer === 2) {
+            } else if (iPlayer === 1) {
                 if (oChipElement.classList.contains("text-danger")) {
                     oChipElement.classList.remove("text-danger");
                     oChipElement.classList.add("text-success");
@@ -205,3 +194,44 @@ function suggestion() {
         oElement.innerHTML = `AI suggests Player ${data.player} to play column: ${data.suggestedColumn}`
     }));
 }
+
+
+function connectWebSocket() {
+    console.log("connectWebSocket");
+    const webSocket = new WebSocket("ws://localhost:9000/websocket");
+    console.log("connected");
+    webSocket.onopen = function (event) {
+        webSocket.send("Trying to connect");
+        handleSocketMessages(event);
+    }
+    webSocket.onclose = function (event) {
+        console.log("onclose");
+    }
+    webSocket.onerror = function (error) {
+        console.log("Error" + error + "occurred");
+    }
+    webSocket.onmessage = function (event) {
+        handleSocketMessages(event);
+    }
+
+}
+
+function handleSocketMessages(event) {
+    if (typeof event.data === "string") {
+        try {
+            _parsePlayground(JSON.parse(event.data))
+        } catch (e) {
+        }
+    } else if (event.data instanceof ArrayBuffer) {
+        console.log('ArrayBuffer received: ' + event.data);
+    } else if (event.data instanceof Blob) {
+        console.log('Blob received: ' + event.data);
+    }
+}
+
+
+$( document ).ready(function() {
+    connectWebSocket();
+});
+
+

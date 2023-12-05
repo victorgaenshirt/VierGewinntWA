@@ -1,14 +1,16 @@
 package controllers
 
+import akka.actor._
+import akka.stream.Materializer
 import com.google.inject.Guice
 import de.htwg.se.VierGewinnt.VierGewinntModule
 import de.htwg.se.VierGewinnt.controller.controllerComponent.ControllerInterface
 import de.htwg.se.VierGewinnt.model.playgroundComponent.PlaygroundInterface
 import de.htwg.se.VierGewinnt.model.playgroundComponent.playgroundBaseImpl.PlaygroundPvP
-import de.htwg.se.VierGewinnt.util.Move
+import de.htwg.se.VierGewinnt.util.{Move, Observer}
 import play.api.libs.json.{JsNumber, JsString, Json}
+import play.api.libs.streams.ActorFlow
 import play.api.mvc._
-
 import javax.inject._
 
 /**
@@ -16,7 +18,8 @@ import javax.inject._
  * application's home page.
  */
 @Singleton
-class HomeController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
+class HomeController @Inject()(val controllerComponents: ControllerComponents)
+                              (implicit system: ActorSystem, mat: Materializer) extends BaseController {
   private val injector = Guice.createInjector(new VierGewinntModule)
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
 
@@ -83,6 +86,31 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
         ))
     }
   }
+
+  def socket = WebSocket.accept[String, String] { request =>
+    ActorFlow.actorRef { out =>
+      println("Connect received")
+      MyWebSocketActor.props(out)
+    }
+  }
+
+  object MyWebSocketActor {
+    def props(out: ActorRef) = {
+      Props(new MyWebSocketActor(out))
+    }
+  }
+
+  class MyWebSocketActor(out: ActorRef) extends Actor with Observer {
+    controller.add(this)
+
+    def receive: Receive = {
+      case msg: String =>
+        out ! Json.stringify(pgToJson(controller.playground, controller.printState))
+    }
+
+    override def update: Unit = out ! Json.stringify(pgToJson(controller.playground, controller.printState))
+  }
+
 
   private def pgToJson(pg: PlaygroundInterface, state: String) = {
     Json.obj(
