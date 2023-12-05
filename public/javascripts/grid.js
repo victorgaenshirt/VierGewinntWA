@@ -201,8 +201,8 @@ function connectWebSocket() {
     const webSocket = new WebSocket("ws://localhost:9000/websocket");
     console.log("connected");
     webSocket.onopen = function (event) {
-        console.log("onopen");
         webSocket.send("Trying to connect");
+        handleSocketMessages(event);
     }
     webSocket.onclose = function (event) {
         console.log("onclose");
@@ -211,22 +211,27 @@ function connectWebSocket() {
         console.log("Error" + error + "occurred");
     }
     webSocket.onmessage = function (event) {
-        if (typeof event.data === "string") {
-            try {
-                _parsePlayground(JSON.parse(event.data))
-            } catch (e) {
-            }
-        } else if (event.data instanceof ArrayBuffer) {
-            console.log('ArrayBuffer received: ' + event.data);
-        } else if (event.data instanceof Blob) {
-            console.log('Blob received: ' + event.data);
+        handleSocketMessages(event);
+    }
+
+}
+
+function handleSocketMessages(event) {
+    if (typeof event.data === "string") {
+        try {
+            _parsePlayground(JSON.parse(event.data))
+        } catch (e) {
         }
+    } else if (event.data instanceof ArrayBuffer) {
+        console.log('ArrayBuffer received: ' + event.data);
+    } else if (event.data instanceof Blob) {
+        console.log('Blob received: ' + event.data);
     }
 }
 
 
 $( document ).ready(function() {
-    connectWebSocket()
+    connectWebSocket();
 });
 
 

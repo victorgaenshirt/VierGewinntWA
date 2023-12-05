@@ -96,19 +96,16 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents)
 
   object MyWebSocketActor {
     def props(out: ActorRef) = {
-      println("Object created")
       Props(new MyWebSocketActor(out))
     }
   }
 
   class MyWebSocketActor(out: ActorRef) extends Actor with Observer {
-    println("Class created")
     controller.add(this)
 
     def receive: Receive = {
       case msg: String =>
-        out ! ("I received your message: " + msg)
-        println("Received message " + msg)
+        out ! Json.stringify(pgToJson(controller.playground, controller.printState))
     }
 
     override def update: Unit = out ! Json.stringify(pgToJson(controller.playground, controller.printState))
