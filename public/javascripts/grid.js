@@ -129,7 +129,7 @@ function winAnimation(aChips) {
     const blinkInterval = setInterval(() => {
         aChipCoordinates.forEach(item => {
             const oChipElement = document.getElementById(`${item[0]}.${item[1]}`);
-            if (iPlayer === 1) {
+            if (iPlayer === 2) {
                 if (oChipElement.classList.contains("text-warning")) {
                     oChipElement.classList.remove("text-warning");
                     oChipElement.classList.add("text-success");
@@ -137,7 +137,7 @@ function winAnimation(aChips) {
                     oChipElement.classList.remove("text-success");
                     oChipElement.classList.add("text-warning");
                 }
-            } else if (iPlayer === 2) {
+            } else if (iPlayer === 1) {
                 if (oChipElement.classList.contains("text-danger")) {
                     oChipElement.classList.remove("text-danger");
                     oChipElement.classList.add("text-success");
