@@ -13,32 +13,23 @@
                 <h2 class="text-center">@state @player it's your turn!</h2>
             }
 
-            <div class="row justify-content-center mt-5">
-                <div class="col-sm-2 text-center">
-                    <button class="btn btn-success btn-lg" onclick="newGame(0)">
+            <div class="column justify-content-center text-center  grid gap-3">
+                    <button class="btn btn-success btn-lg mt-2" onclick="newGame(0)">
                         Neues Spiel <i class="bi bi-play-circle-fill"></i></button>
-                </div>
-                <div class="col-lg-2 text-center">
-                    <button class="btn btn-primary btn-lg" onclick="save()">
+                    <button class="btn btn-primary btn-lg mt-2" onclick="save()">
                         Speichern <i class="bi bi-floppy-fill"></i></button>
-                </div>
-                <div class="col-lg-2 text-center">
-                    <button class="btn btn-primary btn-lg" onclick="load()">
+                    <button class="btn btn-primary btn-lg mt-2" onclick="load()">
                         Laden <i class="bi bi-cloud-download-fill"></i></button>
-                </div>
-                <div class="col-lg-2 text-center">
-                    <button class="btn btn-primary btn-lg" onclick="suggestion()">
+                    <button class="btn btn-primary btn-lg mt-2" onclick="suggestion()">
                         Tipp! <i class="bi bi-cloud-download-fill"></i></button>
-                </div>
             </div>
-            <div class="row justify-content-center mt-5">
-                <div class="text-center col col-lg-2">
-                    <button class="btn btn-secondary" onclick="undo()">
-                        Undo <i class="bi bi-arrow-counterclockwise"></i></button>
-                </div>
-                <div class="text-center col col-lg-2">
-                    <button class="btn btn-secondary" onclick="redo()">Redo <i class="bi bi-arrow-clockwise"></i></button>
-                </div>
+            <div class="column justify-content-center grid gap-3 text-center">
+                    <button class="btn btn-secondary mt-2" onclick="undo()">
+                        Undo <i class="bi bi-arrow-counterclockwise"></i>
+                    </button>
+                    <button class="btn btn-secondary mt-2" onclick="redo()">
+                        Redo <i class="bi bi-arrow-clockwise"></i>
+                    </button>
             </div>
             <div id="suggestion" class="text text-center"></div>
             <div id="grid" class="mt-5 container-fluid text-center" style=" max-width: 500px"></div>
