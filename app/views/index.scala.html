@@ -6,12 +6,12 @@
 
         <div class="container-fluid mt-5 p-3 position-relative">
             <h1 class="text-center text-info">Willkommen zu <br> Vier Gewinnt!</h1>
-            <p v-if="state.contains('won')">
+
+            @if(state.contains("won")) {
                 <h2 class="text-center text-success">@player you won!!</h2>
-            </p>
-            <p v-else>
+            } else {
                 <h2 class="text-center">@state @player it's your turn!</h2>
-            </p>
+            }
 
             <div class="column justify-content-center text-center  grid gap-3">
                     <button class="btn btn-success btn-lg mt-2" onclick="newGame(0)">
