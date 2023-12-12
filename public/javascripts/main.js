@@ -24,5 +24,20 @@ app.component("state", {
         `
     }
 )
+
+app.component("mybutton", {
+    props: {
+        onClick: Function,
+        label: String,
+        styling: String,
+        icon: String
+    },
+    template: `
+    <button class="btn btn-lg m-2 btn-primary" :class="styling" onClick="onClick">{{ label }}
+        <i :class="icon"></i>
+    </button>`
+})
+
+
 app.mount('#app')
 

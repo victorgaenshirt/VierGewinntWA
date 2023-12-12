@@ -12,22 +12,20 @@
             <state></state>
 
             <div class="column justify-content-center text-center  grid gap-3">
-                <button class="btn btn-success btn-lg mt-2" onclick="newGame(0)">
-                    Neues Spiel <i class="bi bi-play-circle-fill"></i></button>
-                <button class="btn btn-primary btn-lg mt-2" onclick="save()">
-                    Speichern <i class="bi bi-floppy-fill"></i></button>
-                <button class="btn btn-primary btn-lg mt-2" onclick="load()">
-                    Laden <i class="bi bi-cloud-download-fill"></i></button>
-                <button class="btn btn-primary btn-lg mt-2" onclick="suggestion()">
-                    Tipp! <i class="bi bi-cloud-download-fill"></i></button>
+                <mybutton label="Neues Spiel " onClick="newGame(0)" styling="btn-success" icon="bi-play-circle-fill">
+                </mybutton>
+                <mybutton label="Speichern " onClick="save()" icon="bi-floppy-fill">
+                </mybutton>
+                <mybutton label="Laden " onClick="load()" icon="bi-cloud-download-fill">
+                </mybutton>
+                <mybutton label="Tipp! " onClick="suggestion()" icon="bi-cloud-download-fill">
+                </mybutton>
             </div>
             <div class="column justify-content-center grid gap-3 text-center">
-                <button class="btn btn-secondary mt-2" onclick="undo()">
-                    Undo <i class="bi bi-arrow-counterclockwise"></i>
-                </button>
-                <button class="btn btn-secondary mt-2" onclick="redo()">
-                    Redo <i class="bi bi-arrow-clockwise"></i>
-                </button>
+                <mybutton label="Undo " onClick="undo()" styling="btn-secondary" icon="bi-arrow-counterclockwise">
+                </mybutton>
+                <mybutton label="Redo " onClick="redo()" styling="btn-secondary" icon="bi-arrow-clockwise">
+                </mybutton>
             </div>
             <div id="suggestion" class="text text-center"></div>
             <div id="grid" class="mt-5 container-fluid text-center" style=" max-width: 500px"></div>
