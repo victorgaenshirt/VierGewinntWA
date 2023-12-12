@@ -194,3 +194,21 @@ function suggestion() {
         oElement.innerHTML = `AI suggests Player ${data.player} to play column: ${data.suggestedColumn}`
     }));
 }
+
+async function handleSocketMessages(event) {
+    let data = {};
+
+    if (typeof event.data === "string") {
+        try {
+            data = await JSON.parse(event.data)
+            _parsePlayground(data)
+        } catch (e) {
+        }
+    } else if (event.data instanceof ArrayBuffer) {
+        console.log('ArrayBuffer received: ' + event.data);
+    } else if (event.data instanceof Blob) {
+        console.log('Blob received: ' + event.data);
+    }
+
+    return data;
+}

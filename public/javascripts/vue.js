@@ -10,7 +10,7 @@ app.component("mybutton", {
         icon: String
     },
     template: `
-    <button class="btn btn-lg m-2 btn-primary" :class="styling" onClick="onClick">{{ label }}
+    <button class="btn btn-lg m-2 btn-primary" :class="styling" @click="onClick">{{ label }}
         <i :class="icon"></i>
     </button>`
 })
@@ -44,30 +44,12 @@ app.component("grid-component", {
             this.connectWebSocket()
         },
         template: `
-        <h2 v-if="dataset.state && dataset.playground.currentPlayer && dataset.state.includes('won')" class="text-center text-success">{{dataset.playground.currentPlayer.name}} you won!!</h2>
-        <h2 v-else-if="dataset.state && dataset.playground.currentPlayer" class="text-center">{{dataset.state}} {{dataset.playground.currentPlayer.name}} it's your turn!</h2>
+        <h2 v-if="dataset.state && dataset.playground.currentPlayer && dataset.state.includes('won')"
+        class="text-center text-success">{{dataset.playground.currentPlayer.name}} you won!!</h2>
+        <h2 v-else-if="dataset.state && dataset.playground.currentPlayer" class="text-center">
+            {{dataset.state}} {{dataset.playground.currentPlayer.name}} it's your turn!</h2>
         <div id="grid" class="mt-5 container-fluid text-center" style=" max-width: 500px"></div>
         `
     }
 )
 app.mount('#app')
-
-
-async function handleSocketMessages(event) {
-    let data = {};
-
-    if (typeof event.data === "string") {
-        try {
-            data = await JSON.parse(event.data)
-            _parsePlayground(data)
-        } catch (e) {
-        }
-    } else if (event.data instanceof ArrayBuffer) {
-        console.log('ArrayBuffer received: ' + event.data);
-    } else if (event.data instanceof Blob) {
-        console.log('Blob received: ' + event.data);
-    }
-
-    return data;
-}
-
