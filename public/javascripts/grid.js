@@ -53,6 +53,8 @@ function playMove(column) {
             'Content-Type': 'application/json'
         },
         body: "",
+    }).then((response) => {
+        response.json().then((data) => this._parsePlayground(data))
     });
 }
 
@@ -65,7 +67,10 @@ function newGame(type) {
             'Content-Type': 'application/json'
         },
         body: "",
+    }).then((response) => {
+        response.json().then((data) => this._parsePlayground(data))
     });
+
 }
 
 function load() {
@@ -195,31 +200,13 @@ function suggestion() {
     }));
 }
 
+async function handleSocketMessages(event) {
+    let data = {};
 
-function connectWebSocket() {
-    console.log("connectWebSocket");
-    const webSocket = new WebSocket("ws://localhost:9000/websocket");
-    console.log("connected");
-    webSocket.onopen = function (event) {
-        webSocket.send("Trying to connect");
-        handleSocketMessages(event);
-    }
-    webSocket.onclose = function (event) {
-        console.log("onclose");
-    }
-    webSocket.onerror = function (error) {
-        console.log("Error" + error + "occurred");
-    }
-    webSocket.onmessage = function (event) {
-        handleSocketMessages(event);
-    }
-
-}
-
-function handleSocketMessages(event) {
     if (typeof event.data === "string") {
         try {
-            _parsePlayground(JSON.parse(event.data))
+            data = await JSON.parse(event.data)
+            _parsePlayground(data)
         } catch (e) {
         }
     } else if (event.data instanceof ArrayBuffer) {
@@ -227,11 +214,6 @@ function handleSocketMessages(event) {
     } else if (event.data instanceof Blob) {
         console.log('Blob received: ' + event.data);
     }
+
+    return data;
 }
-
-
-$( document ).ready(function() {
-    connectWebSocket();
-});
-
-

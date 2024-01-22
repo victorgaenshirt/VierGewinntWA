@@ -2,45 +2,41 @@
 @import de.htwg.se.VierGewinnt.model.gridComponent.gridBaseImpl.Chip
 @(grid: GridInterface, state: String, player: String)
 
-    @main("Vier Gewinnt") {
-
+@main("Vier Gewinnt") {
+    <div id="app">
         <div class="container-fluid mt-5 p-3 position-relative">
+
             <h1 class="text-center text-info">Willkommen zu <br> Vier Gewinnt!</h1>
 
-            @if(state.contains("won")) {
-                <h2 class="text-center text-success">@player you won!!</h2>
-            } else {
-                <h2 class="text-center">@state @player it's your turn!</h2>
-            }
-
             <div class="column justify-content-center text-center  grid gap-3">
-                    <button class="btn btn-success btn-lg mt-2" onclick="newGame(0)">
-                        Neues Spiel <i class="bi bi-play-circle-fill"></i></button>
-                    <button class="btn btn-primary btn-lg mt-2" onclick="save()">
-                        Speichern <i class="bi bi-floppy-fill"></i></button>
-                    <button class="btn btn-primary btn-lg mt-2" onclick="load()">
-                        Laden <i class="bi bi-cloud-download-fill"></i></button>
-                    <button class="btn btn-primary btn-lg mt-2" onclick="suggestion()">
-                        Tipp! <i class="bi bi-cloud-download-fill"></i></button>
+                <mybutton label="Neues Spiel " onClick="newGame(0)" styling="btn-success" icon="bi-play-circle-fill">
+                </mybutton>
+                <mybutton label="Speichern " onClick="save()" icon="bi-floppy-fill">
+                </mybutton>
+                <mybutton label="Laden " onClick="load()" icon="bi-cloud-download-fill">
+                </mybutton>
+                <mybutton label="Tipp! " onClick="suggestion()" icon="bi-cloud-download-fill">
+                </mybutton>
             </div>
             <div class="column justify-content-center grid gap-3 text-center">
-                    <button class="btn btn-secondary mt-2" onclick="undo()">
-                        Undo <i class="bi bi-arrow-counterclockwise"></i>
-                    </button>
-                    <button class="btn btn-secondary mt-2" onclick="redo()">
-                        Redo <i class="bi bi-arrow-clockwise"></i>
-                    </button>
+                <mybutton label="Undo " onClick="undo()" styling="btn-secondary" icon="bi-arrow-counterclockwise">
+                </mybutton>
+                <mybutton label="Redo " onClick="redo()" styling="btn-secondary" icon="bi-arrow-clockwise">
+                </mybutton>
             </div>
             <div id="suggestion" class="text text-center"></div>
-            <div id="grid" class="mt-5 container-fluid text-center" style=" max-width: 500px"></div>
+            <grid-component></grid-component>
 
 
         </div>
+    </div>
 
-        <script src="@{
-            routes.Assets.versioned("javascripts/grid.js")
-        }"></script>
-        <script src="@{
-            routes.Assets.versioned("javascripts/keyMapping.js")
-        }"></script>
-    }
+    <script src="@{
+        routes.Assets.versioned("javascripts/grid.js")
+    }"></script>
+    <script src="@{
+        routes.Assets.versioned("javascripts/keyMapping.js")
+    }"></script>
+    <script src="@routes.Assets.versioned("javascripts/vue.js")" type="text/javascript"></script>
+
+}
