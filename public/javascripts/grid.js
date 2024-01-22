@@ -53,6 +53,8 @@ function playMove(column) {
             'Content-Type': 'application/json'
         },
         body: "",
+    }).then((response) => {
+        response.json().then((data) => this._parsePlayground(data))
     });
 }
 
@@ -65,7 +67,10 @@ function newGame(type) {
             'Content-Type': 'application/json'
         },
         body: "",
+    }).then((response) => {
+        response.json().then((data) => this._parsePlayground(data))
     });
+
 }
 
 function load() {
