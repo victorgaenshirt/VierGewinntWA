@@ -1,9 +1,12 @@
-const express = require('express');
-const app = express();
-const {OpenAI} = require("langchain/llms/openai");
-const cors = require('cors');
+import { ChatOpenAI } from "langchain/chat_models/openai";
+import cors from 'cors';
+import express from "express";
+import { run } from "./VierGewinntAI.js";
+import bodyParser from 'body-parser';
 
-const llm = new OpenAI({
+const app = express();
+
+const llm = new ChatOpenAI({
     openAIApiKey: process.env.OPENAI_API_KEY,
     temperature: 0.7
 });
@@ -19,4 +22,15 @@ Print only and only the JSON object without anything else but the JSON. Remove a
     response.end(llmResult.match(/\{(.*?)\}/)[0]);
 });
 
-app.listen(process.env.PORT || 3000, () => console.log(`App available on http://localhost:3000`))
+app.post('/api/playAI',bodyParser.json(), async (request, response) => {
+    console.info(request.body.playground.currentPlayer)
+    if (request.body) {
+        const res = await run(request.body);
+        console.info(res);
+        response.end(JSON.stringify(res));
+    }
+});
+
+app.use(bodyParser.json())
+
+app.listen(process.env.PORT || 3000, () => console.log(`App available on http://localhost:3000`));
